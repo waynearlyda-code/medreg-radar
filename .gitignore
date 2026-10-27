@@ -1,0 +1,8 @@
+.DS_Store
+__pycache__/
+*.pyc
+inbox/*.html
+inbox/*.htm
+inbox/*_files/
+inbox/done/
+data/*.tmp
