@@ -221,9 +221,10 @@ footer p{margin:4px 0}
   .top nav{display:none}
 }
 @media (max-width:520px){
-  .stats{grid-template-columns:1fr}
-  .stat{border-right:0;border-bottom:1px solid var(--line)}
-  .stat:last-child{border-bottom:0}
+  .stat{padding:10px 10px}
+  .stat .v{font-size:24px;margin-top:6px}
+  .stat .k{font-size:10px;letter-spacing:.04em}
+  .stat .d{font-size:11px}
 }
 @media (prefers-reduced-motion:reduce){
   .radar .sweep,.radar .blip.ping circle.halo{animation:none}
