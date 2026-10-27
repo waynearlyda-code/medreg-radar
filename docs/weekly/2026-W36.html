@@ -1,39 +1,246 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MedReg Radar · 周报 2026-W36</title><style>
-:root{--bg:#f6f7f9;--card:#fff;--ink:#16202a;--muted:#5d6b78;--line:#e3e7ec;--accent:#0f6e8c;
---img:#0f6e8c;--dev:#5b5fc7;--bgk:#8a96a3;--chip:#eef3f6}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--card:#171e24;--ink:#e6edf3;--muted:#93a1ad;
---line:#26313a;--accent:#4fb3d1;--img:#4fb3d1;--dev:#9a9df0;--bgk:#76838f;--chip:#1f2a33}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
-font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:920px;margin:0 auto;padding:28px 16px 64px}
-header h1{margin:0;font-size:26px;letter-spacing:.5px}header h1 span{color:var(--accent)}
-header p{margin:6px 0 0;color:var(--muted)}
-.stats{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
-.stat{flex:1 1 140px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-.stat b{display:block;font-size:24px}.stat small{color:var(--muted)}
-.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0 14px}
-.bar button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;
-padding:5px 12px;font:inherit;font-size:13px;cursor:pointer}.bar button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.bar input{flex:1 1 180px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;font:inherit}
-.item{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--bgk);border-radius:8px;padding:12px 14px;margin:10px 0}
-.item.L0{border-left-color:var(--img)}.item.L1{border-left-color:var(--dev)}
-.item a{color:var(--ink);font-weight:600;text-decoration:none}.item a:hover{color:var(--accent);text-decoration:underline}
-.meta{color:var(--muted);font-size:13px;margin-top:2px}.sum{font-size:14px;margin-top:6px;color:var(--ink);opacity:.85}
-.chip{display:inline-block;background:var(--chip);border-radius:4px;padding:0 6px;margin-right:4px;font-size:12px}
-.lv{font-size:12px;font-weight:600;margin-right:6px}.L0 .lv{color:var(--img)}.L1 .lv{color:var(--dev)}.L2 .lv{color:var(--bgk)}
-h2{font-size:18px;margin:34px 0 6px}.arch{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.arch a{display:block;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--ink);text-decoration:none;font-size:14px}
-.arch a small{color:var(--muted);display:block}.arch a:hover{border-color:var(--accent)}
-.note{color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px;padding-top:14px}
-.empty{color:var(--muted);padding:12px 0}
-</style></head><body><div class="wrap"><header><h1><a href="../index.html" style="color:inherit;text-decoration:none">MedReg <span>Radar</span></a></h1><p>医疗器械法规与政策动态 · 以医学影像设备为主</p></header><h2>周报 2026-W36</h2><div class="bar"><button data-lv="全部" class="on">全部</button><button data-lv="影像设备">影像设备</button><button data-lv="医疗器械">医疗器械</button><button data-lv="背景">背景</button><input id="q" placeholder="搜索标题或摘要"><small id="count"></small></div><div class="empty">这一期没有新文件。</div><p class="note">本站由程序从公开渠道自动整理，非官方发布。分级与标签由关键词规则生成，可能有误，一切以原文为准。每条均附官方原文链接。</p></div>
-<script>
-(function(){var lv='全部',q='';var items=[].slice.call(document.querySelectorAll('.item'));
-function apply(){var n=0;items.forEach(function(el){var ok=(lv==='全部'||el.dataset.lv===lv)&&
-(!q||el.textContent.indexOf(q)>-1);el.style.display=ok?'':'none';if(ok)n++;});
-var c=document.getElementById('count');if(c)c.textContent=n+' 条';}
-document.querySelectorAll('.bar button').forEach(function(b){b.onclick=function(){
-document.querySelectorAll('.bar button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');lv=b.dataset.lv;apply();};});
-var s=document.getElementById('q');if(s)s.oninput=function(){q=s.value.trim();apply();};apply();})();
-</script>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MedReg Radar · 周报 2026-W36（08.31 – 09.06）</title><style>/* MedReg Radar · 临床实验室风格：白底、细线、等宽标签。颜色全部走变量，亮暗两套。 */
+:root{
+  color-scheme:light;
+  --bg:#f4f5f3;--surface:#fcfcfb;--surface-2:#f0f1ee;--line:#dfe1dc;--line-2:#c9ccc5;
+  --ink:#0f1412;--ink-2:#4b524e;--ink-3:#7c837e;
+  --accent:#2a78d6;--accent-ink:#1c5cab;--accent-wash:rgba(42,120,214,.08);
+  --s-img:#2a78d6;--s-dev:#eb6834;--s-bg:#9aa09b;
+  --grid:rgba(15,20,18,.045);--sweep:rgba(42,120,214,.22);
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){
+  color-scheme:dark;
+  --bg:#0e1110;--surface:#161a18;--surface-2:#1c211f;--line:#2a302d;--line-2:#3a413d;
+  --ink:#eef0ec;--ink-2:#b7bdb8;--ink-3:#868d88;
+  --accent:#3987e5;--accent-ink:#86b6ef;--accent-wash:rgba(57,135,229,.12);
+  --s-img:#3987e5;--s-dev:#d95926;--s-bg:#6f7671;
+  --grid:rgba(238,240,236,.04);--sweep:rgba(57,135,229,.28);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0e1110;--surface:#161a18;--surface-2:#1c211f;--line:#2a302d;--line-2:#3a413d;
+  --ink:#eef0ec;--ink-2:#b7bdb8;--ink-3:#868d88;
+  --accent:#3987e5;--accent-ink:#86b6ef;--accent-wash:rgba(57,135,229,.12);
+  --s-img:#3987e5;--s-dev:#d95926;--s-bg:#6f7671;
+  --grid:rgba(238,240,236,.04);--sweep:rgba(57,135,229,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--sans);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:32px 32px}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+.mono{font-family:var(--mono);letter-spacing:.06em}
+.tag{font:11px/1 var(--mono);letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase}
+
+/* 顶栏 */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand b{font-size:17px;letter-spacing:.02em}.brand b span{color:var(--accent)}
+.brand svg{width:26px;height:26px}
+.top nav{display:flex;gap:18px;margin-left:24px}
+.top nav a{font:12px/1 var(--mono);letter-spacing:.1em;color:var(--ink-2);text-decoration:none;text-transform:uppercase}
+.top nav a:hover{color:var(--accent)}
+.top .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);
+  border-radius:6px;padding:7px 12px;font:13px/1 var(--sans);cursor:pointer;text-decoration:none}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{filter:brightness(1.08);color:#fff}
+.btn svg{width:15px;height:15px}
+.iconbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:6px;width:32px;height:32px;cursor:pointer}
+
+/* 首屏 */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:56px 0 40px}
+.hero h1{font-size:40px;line-height:1.15;margin:14px 0 14px;letter-spacing:.01em;font-weight:650}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{color:var(--ink-2);margin:0 0 22px;max-width:34em}
+.idline{display:flex;align-items:center;gap:10px}
+.idline i{display:block;width:28px;height:1px;background:var(--ink-3)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:var(--surface);border-radius:8px;overflow:hidden}
+.stat{padding:14px 16px;border-right:1px solid var(--line);position:relative}
+.stat:last-child{border-right:0}
+.stat .k{display:flex;align-items:center;gap:6px;font:11px/1 var(--mono);letter-spacing:.1em;color:var(--ink-3)}
+.stat .k i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.stat .v{font-size:30px;font-weight:600;margin-top:8px;line-height:1}
+.stat .d{font-size:12px;color:var(--ink-3);margin-top:6px}
+.updated{margin-top:14px;font:12px/1.4 var(--mono);color:var(--ink-3);letter-spacing:.06em}
+.updated b{color:var(--ink-2);font-weight:500}
+
+/* 雷达 */
+.radar{position:relative;aspect-ratio:1;max-width:440px;width:100%;justify-self:center}
+.radar svg{width:100%;height:100%;overflow:visible}
+.radar .ring{fill:none;stroke:var(--line-2);stroke-width:1}
+.radar .axis{stroke:var(--line);stroke-width:1}
+.radar .rlabel{font:10px var(--mono);fill:var(--ink-3);letter-spacing:.1em}
+.radar .sweep{transform-origin:200px 200px;animation:sweep 6s linear infinite}
+.radar .blip{cursor:pointer}
+.radar .blip circle.core{stroke:var(--surface);stroke-width:2}
+.radar .blip circle.halo{fill:none;stroke-width:1.5;opacity:0;transform-box:fill-box;transform-origin:center}
+.radar .blip.ping circle.halo{animation:ping 1.6s ease-out}
+.radar .blip:hover circle.core,.radar .blip:focus circle.core{r:7}
+@keyframes sweep{to{transform:rotate(360deg)}}
+@keyframes ping{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(3.2)}}
+.radar .corner{position:absolute;font:10px/1.5 var(--mono);color:var(--ink-3);letter-spacing:.1em}
+.radar .corner.tl{top:0;left:0}.radar .corner.br{bottom:0;right:0;text-align:right}
+
+/* 区块 */
+section{padding:34px 0}
+.sec-h{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:18px}
+.sec-h .no{font:12px/1 var(--mono);color:var(--accent);letter-spacing:.12em}
+.sec-h h2{margin:0;font-size:20px;font-weight:600}
+.sec-h .sub{color:var(--ink-3);font-size:13px;margin-left:auto}
+
+/* 筛选 */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:6px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--ink-2);padding:6px 12px;font:13px/1 var(--sans);cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent-wash);color:var(--accent-ink);font-weight:600}
+.seg button i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:0}
+.search{flex:1 1 200px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:6px;padding:7px 10px;font:14px var(--sans)}
+.count{font:12px var(--mono);color:var(--ink-3);letter-spacing:.06em}
+
+/* 条目 */
+.feed{display:grid;gap:10px}
+.card{display:grid;grid-template-columns:4px 1fr;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.card .bar{background:var(--s-bg)}
+.card[data-lv="影像设备"] .bar{background:var(--s-img)}.card[data-lv="医疗器械"] .bar{background:var(--s-dev)}
+.card .in{padding:12px 16px}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font:12px/1.4 var(--mono);color:var(--ink-3);letter-spacing:.04em}
+.card .lv{font-weight:600;color:var(--ink-2)}
+.card h3{margin:6px 0 0;font-size:15.5px;line-height:1.5;font-weight:600}
+.card h3 a{text-decoration:none}.card h3 a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.card .snip{margin:6px 0 0;color:var(--ink-2);font-size:14px}
+.card .ai{margin:10px 0 0;padding:10px 12px;border-radius:6px;background:var(--accent-wash);font-size:14px;color:var(--ink)}
+.card .ai .tag{color:var(--accent-ink);margin-right:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:1px 7px;background:var(--surface-2)}
+.more{margin-top:14px;text-align:center}
+.empty{color:var(--ink-3);padding:24px 0;text-align:center}
+
+/* 图表 */
+.charts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 16px 12px;position:relative;min-width:0}
+.chart.wide{grid-column:1/-1}
+.chart header{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.chart h3{margin:0;font-size:15px;font-weight:600}
+.chart .desc{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+.chart header .tools{margin-left:auto;display:flex;gap:6px;align-items:center}
+.chart select{border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:6px;padding:4px 6px;font:12.5px var(--sans)}
+.chart .plot{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .gridl{stroke:var(--line);stroke-width:1}
+.chart .axisl{stroke:var(--line-2);stroke-width:1}
+.chart .tick{font:11px var(--mono);fill:var(--ink-3);font-variant-numeric:tabular-nums}
+.chart .vlabel{font:11px var(--mono);fill:var(--ink-2)}
+.chart .mark{transition:opacity .15s}
+.chart .hit{fill:transparent;cursor:default}
+.chart .dim .mark{opacity:.35}.chart .dim .mark.on{opacity:1}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin:2px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.legend i.hatch{background-image:repeating-linear-gradient(45deg,var(--s-img) 0 2px,transparent 2px 5px)!important;border:1px solid var(--s-img)}
+.note{font-size:12px;color:var(--ink-3);margin-top:6px}
+table.data{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+table.data th,table.data td{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left}
+table.data td.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+.tip{position:fixed;z-index:60;pointer-events:none;background:var(--surface);border:1px solid var(--line-2);border-radius:6px;
+  padding:8px 10px;font-size:12.5px;box-shadow:0 6px 24px rgba(0,0,0,.12);max-width:300px;opacity:0;transition:opacity .1s}
+.tip.on{opacity:1}
+.tip .tv{font-weight:650;font-size:14px;color:var(--ink)}
+.tip .tl{color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+.tip .row{display:flex;align-items:center;gap:8px}
+.tip .row i{width:12px;height:2px;display:inline-block}
+
+/* 档案 */
+.arch{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
+.arch a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:9px 11px;text-decoration:none}
+.arch a:hover{border-color:var(--accent)}
+.arch a b{display:block;font:13px var(--mono);letter-spacing:.04em;font-weight:500}
+.arch a small{color:var(--ink-3);font-size:12px}
+.arch-h{font:12px var(--mono);color:var(--ink-3);letter-spacing:.1em;margin:16px 0 8px}
+
+footer{border-top:1px solid var(--line);margin-top:30px;padding:22px 0 60px;color:var(--ink-3);font-size:12.5px}
+footer p{margin:4px 0}
+
+/* AI 抽屉 */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:var(--surface);border-left:1px solid var(--line-2);
+  z-index:50;transform:translateX(102%);transition:transform .25s ease;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.08)}
+.drawer.open{transform:none}
+.drawer .dh{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.drawer .dh b{font-size:15px}.drawer .dh .sp{flex:1}
+.drawer .body{flex:1;overflow:auto;padding:14px 16px}
+.msg{margin:0 0 14px}
+.msg .who{font:11px var(--mono);color:var(--ink-3);letter-spacing:.1em;margin-bottom:4px}
+.msg .txt{white-space:pre-wrap;font-size:14px;line-height:1.7}
+.msg.user .txt{background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.msg .txt a.cite{font:11px var(--mono);color:var(--accent);text-decoration:none;vertical-align:super;padding:0 1px}
+.msg .refs{margin-top:8px;font-size:12.5px;color:var(--ink-3)}
+.msg .refs a{color:var(--ink-2)}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.presets button{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:5px 10px;font:12.5px var(--sans);cursor:pointer}
+.presets button:hover{border-color:var(--accent);color:var(--accent)}
+.drawer form{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+.drawer textarea{flex:1;resize:none;height:64px;border:1px solid var(--line-2);background:var(--bg);color:var(--ink);border-radius:6px;padding:8px;font:14px var(--sans)}
+.keybar{display:flex;align-items:center;gap:8px;padding:8px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-3)}
+.keybar button{border:0;background:none;color:var(--accent);cursor:pointer;font:12px var(--sans);padding:0}
+
+/* key 引导弹窗 */
+.modal{position:fixed;inset:0;z-index:70;background:rgba(10,14,12,.45);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.modal .box{background:var(--surface);border:1px solid var(--line-2);border-radius:10px;max-width:520px;width:100%;padding:22px;max-height:92vh;overflow:auto}
+.modal h3{margin:0 0 4px;font-size:18px}
+.modal ol{padding-left:20px;margin:12px 0}
+.modal li{margin:6px 0}
+.modal input{width:100%;border:1px solid var(--line-2);background:var(--bg);color:var(--ink);border-radius:6px;padding:9px 10px;font:14px var(--mono)}
+.modal .warn{font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:6px;padding:8px 10px;margin:12px 0}
+.modal .row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+
+/* 报告页 */
+.report-h{padding:40px 0 10px}
+.report-h h1{margin:8px 0 6px;font-size:28px}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;padding-top:32px}
+  .hero h1{font-size:30px}
+  .radar{max-width:320px}
+  .charts{grid-template-columns:1fr}
+  .top nav{display:none}
+}
+@media (max-width:520px){
+  .stats{grid-template-columns:1fr}
+  .stat{border-right:0;border-bottom:1px solid var(--line)}
+  .stat:last-child{border-bottom:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .radar .sweep,.radar .blip.ping circle.halo{animation:none}
+  .card,.drawer{transition:none}
+}
+/* 窄屏不横向溢出 */
+.hero>*,.card .in,.chart,.filters{min-width:0}
+.idline{flex-wrap:wrap}
+.card h3,.updated,.hero p.lead{overflow-wrap:anywhere}
+.seg{flex-wrap:wrap}
+@media (max-width:520px){
+  .hero h1{font-size:27px}
+  .top .wrap{gap:8px}
+  .brand b{font-size:15px}
+  .chart header{flex-wrap:wrap}
+  .chart header .tools{margin-left:0}
+}
+.drawer:not(.open){visibility:hidden;transition:transform .25s ease,visibility 0s .25s}
+</style></head>
+<body><header class="top"><div class="wrap"><a class="brand" href="../index.html"><b>MedReg <span>Radar</span></b></a>
+<span class="sp"></span><a class="btn" href="../index.html">返回首页</a></div></header>
+<main class="wrap"><div class="report-h"><div class="tag">WEEKLY REPORT</div><h1>周报 2026-W36（08.31 – 09.06）</h1>
+<p class="note">共 0 条 · 影像设备 0 · 医疗器械 0 · 背景 0</p></div>
+<div class="feed"><div class="empty">这一期没有新文件。</div></div></main>
+<footer><div class="wrap"><p>本页由程序从公开渠道自动整理，非官方发布。分级、标签和 AI 解读可能有误，一切以官方原文为准。</p></div></footer>
 </body></html>

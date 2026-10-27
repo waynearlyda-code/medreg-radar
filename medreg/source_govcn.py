@@ -22,8 +22,10 @@ def _get(params):
 
 
 def fetch(cfg, log=print):
+    """返回 (条目列表, 历年趋势)。历年趋势是每个搜索词在政策文件库里每年出现的文件数。"""
     g = cfg["govcn"]
     out = []
+    trends = {}
     for q in g["queries"]:
         for p in range(1, g["pages_per_query"] + 1):
             try:
@@ -32,7 +34,11 @@ def fetch(cfg, log=print):
             except Exception as e:  # 网络问题不让整次运行失败
                 log("  [政府网] %s 第%d页 失败：%s" % (q, p, e))
                 break
-            cats = (data.get("searchVO") or {}).get("catMap") or {}
+            sv = data.get("searchVO") or {}
+            if p == 1:
+                years = (((sv.get("extendresult") or {}).get("facetMap") or {}).get("pubtimeyear") or {})
+                trends[q] = {y: int(v) for y, v in years.items() if y.isdigit()}
+            cats = sv.get("catMap") or {}
             got = 0
             for key, label in g["categories"].items():
                 for x in (cats.get(key) or {}).get("listVO") or []:
@@ -52,4 +58,4 @@ def fetch(cfg, log=print):
             time.sleep(g["request_interval_seconds"])
             if got == 0:
                 break
-    return out
+    return out, trends

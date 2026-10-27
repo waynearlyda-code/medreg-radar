@@ -6,3 +6,5 @@ inbox/*.htm
 inbox/*_files/
 inbox/done/
 data/*.tmp
+.secrets/*
+!.secrets/README.md

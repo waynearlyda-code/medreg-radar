@@ -1,43 +1,847 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MedReg Radar · 医疗器械法规雷达</title><style>
-:root{--bg:#f6f7f9;--card:#fff;--ink:#16202a;--muted:#5d6b78;--line:#e3e7ec;--accent:#0f6e8c;
---img:#0f6e8c;--dev:#5b5fc7;--bgk:#8a96a3;--chip:#eef3f6}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--card:#171e24;--ink:#e6edf3;--muted:#93a1ad;
---line:#26313a;--accent:#4fb3d1;--img:#4fb3d1;--dev:#9a9df0;--bgk:#76838f;--chip:#1f2a33}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
-font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:920px;margin:0 auto;padding:28px 16px 64px}
-header h1{margin:0;font-size:26px;letter-spacing:.5px}header h1 span{color:var(--accent)}
-header p{margin:6px 0 0;color:var(--muted)}
-.stats{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
-.stat{flex:1 1 140px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-.stat b{display:block;font-size:24px}.stat small{color:var(--muted)}
-.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0 14px}
-.bar button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;
-padding:5px 12px;font:inherit;font-size:13px;cursor:pointer}.bar button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.bar input{flex:1 1 180px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;font:inherit}
-.item{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--bgk);border-radius:8px;padding:12px 14px;margin:10px 0}
-.item.L0{border-left-color:var(--img)}.item.L1{border-left-color:var(--dev)}
-.item a{color:var(--ink);font-weight:600;text-decoration:none}.item a:hover{color:var(--accent);text-decoration:underline}
-.meta{color:var(--muted);font-size:13px;margin-top:2px}.sum{font-size:14px;margin-top:6px;color:var(--ink);opacity:.85}
-.chip{display:inline-block;background:var(--chip);border-radius:4px;padding:0 6px;margin-right:4px;font-size:12px}
-.lv{font-size:12px;font-weight:600;margin-right:6px}.L0 .lv{color:var(--img)}.L1 .lv{color:var(--dev)}.L2 .lv{color:var(--bgk)}
-h2{font-size:18px;margin:34px 0 6px}.arch{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.arch a{display:block;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--ink);text-decoration:none;font-size:14px}
-.arch a small{color:var(--muted);display:block}.arch a:hover{border-color:var(--accent)}
-.note{color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:40px;padding-top:14px}
-.empty{color:var(--muted);padding:12px 0}
-</style></head><body><div class="wrap"><header><h1><a href="index.html" style="color:inherit;text-decoration:none">MedReg <span>Radar</span></a></h1><p>医疗器械法规与政策动态 · 以医学影像设备为主</p></header><p style="margin-top:14px">医疗器械的法规和政策更新得快，分散在各个部门的网站上。MedReg Radar 定期把公开发布的文件收拢到一处，按“影像设备 / 医疗器械 / 背景”分级，方便设备工程师、采购和管理人员快速了解变化。</p><div class="stats"><div class="stat"><b>0</b><small>近 30 天 · 影像设备</small></div><div class="stat"><b>2</b><small>近 30 天 · 医疗器械</small></div><div class="stat"><b>3</b><small>近 30 天 · 背景</small></div><div class="stat"><b>10-27</b><small>最近更新</small></div></div><h2>近 30 天</h2><div class="bar"><button data-lv="全部" class="on">全部</button><button data-lv="影像设备">影像设备</button><button data-lv="医疗器械">医疗器械</button><button data-lv="背景">背景</button><input id="q" placeholder="搜索标题或摘要"><small id="count"></small></div><div class="item L2" data-lv="背景" data-tags="产业规划"><span class="lv">背景</span><a href="https://www.gov.cn/zhengce/202610/content_7083758.htm" target="_blank" rel="noopener">推动技术与市场高效对接——多部门详解科技兴商</a><div class="meta">2026-10-20 · 中国政府网·政策解读 <span class="chip">产业规划</span></div></div>
-<div class="item L1" data-lv="医疗器械" data-tags="注册审评"><span class="lv">医疗器械</span><a href="https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxpzhzhcchpgg/20261015161757149.html" target="_blank" rel="noopener">国家药监局关于批准注册258个医疗器械产品的公告（2026年9月）（2026年第101号）</a><div class="meta">2026-10-15 · 国家药监局（手动导入） <span class="chip">注册审评</span></div></div>
-<div class="item L1" data-lv="医疗器械" data-tags="监督检查"><span class="lv">医疗器械</span><a href="https://www.nmpa.gov.cn/ylqx/ylqxggtg/20261010160903185.html" target="_blank" rel="noopener">国家药监局关于发布国家医疗器械监督抽检结果的通告（2026年第35号）</a><div class="meta">2026-10-10 · 国家药监局（手动导入） <span class="chip">监督检查</span></div></div>
-<div class="item L2" data-lv="背景" data-tags="注册审评 产业规划"><span class="lv">背景</span><a href="https://www.gov.cn/zhengce/zhengceku/202610/content_7082724.htm" target="_blank" rel="noopener">关于印发医疗康复护理扩容提升工程实施方案的通知</a><div class="meta">2026-10-08 · 中国政府网·部门文件 · 国卫规划发〔2026〕24号 <span class="chip">注册审评</span><span class="chip">产业规划</span></div></div>
-<div class="item L2" data-lv="背景" data-tags=""><span class="lv">背景</span><a href="https://www.gov.cn/zhengce/zhengceku/202609/content_7082302.htm" target="_blank" rel="noopener">中国人民银行等八部门联合印发《关于金融支持服务业扩能提质的指导意见》</a><div class="meta">2026-09-28 · 中国政府网·部门文件 </div></div><h2>周报</h2><div class="arch"><a href="weekly/2026-W44.html">2026-W44<small>0 条</small></a><a href="weekly/2026-W43.html">2026-W43<small>1 条</small></a><a href="weekly/2026-W42.html">2026-W42<small>1 条</small></a><a href="weekly/2026-W41.html">2026-W41<small>2 条</small></a><a href="weekly/2026-W40.html">2026-W40<small>1 条</small></a><a href="weekly/2026-W39.html">2026-W39<small>1 条</small></a><a href="weekly/2026-W38.html">2026-W38<small>3 条</small></a><a href="weekly/2026-W37.html">2026-W37<small>1 条</small></a><a href="weekly/2026-W36.html">2026-W36<small>0 条</small></a><a href="weekly/2026-W35.html">2026-W35<small>0 条</small></a><a href="weekly/2026-W34.html">2026-W34<small>2 条</small></a><a href="weekly/2026-W33.html">2026-W33<small>2 条</small></a><a href="weekly/2026-W32.html">2026-W32<small>0 条</small></a><a href="weekly/2026-W31.html">2026-W31<small>0 条</small></a><a href="weekly/2026-W30.html">2026-W30<small>2 条</small></a><a href="weekly/2026-W29.html">2026-W29<small>6 条</small></a><a href="weekly/2026-W28.html">2026-W28<small>1 条</small></a><a href="weekly/2026-W27.html">2026-W27<small>2 条</small></a></div><h2>月报</h2><div class="arch"><a href="monthly/2026-10.html">2026-10<small>4 条</small></a><a href="monthly/2026-09.html">2026-09<small>6 条</small></a><a href="monthly/2026-08.html">2026-08<small>4 条</small></a><a href="monthly/2026-07.html">2026-07<small>10 条</small></a><a href="monthly/2026-06.html">2026-06<small>1 条</small></a></div><p class="note">本站由程序从公开渠道自动整理，非官方发布。分级与标签由关键词规则生成，可能有误，一切以原文为准。每条均附官方原文链接。</p></div>
-<script>
-(function(){var lv='全部',q='';var items=[].slice.call(document.querySelectorAll('.item'));
-function apply(){var n=0;items.forEach(function(el){var ok=(lv==='全部'||el.dataset.lv===lv)&&
-(!q||el.textContent.indexOf(q)>-1);el.style.display=ok?'':'none';if(ok)n++;});
-var c=document.getElementById('count');if(c)c.textContent=n+' 条';}
-document.querySelectorAll('.bar button').forEach(function(b){b.onclick=function(){
-document.querySelectorAll('.bar button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');lv=b.dataset.lv;apply();};});
-var s=document.getElementById('q');if(s)s.oninput=function(){q=s.value.trim();apply();};apply();})();
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MedReg Radar · 医疗器械法规雷达</title>
+<meta name="description" content="医疗器械（以医学影像设备为主）法规与政策动态，自动整理、分级、可视化，并支持 AI 问答。">
+<style>/* MedReg Radar · 临床实验室风格：白底、细线、等宽标签。颜色全部走变量，亮暗两套。 */
+:root{
+  color-scheme:light;
+  --bg:#f4f5f3;--surface:#fcfcfb;--surface-2:#f0f1ee;--line:#dfe1dc;--line-2:#c9ccc5;
+  --ink:#0f1412;--ink-2:#4b524e;--ink-3:#7c837e;
+  --accent:#2a78d6;--accent-ink:#1c5cab;--accent-wash:rgba(42,120,214,.08);
+  --s-img:#2a78d6;--s-dev:#eb6834;--s-bg:#9aa09b;
+  --grid:rgba(15,20,18,.045);--sweep:rgba(42,120,214,.22);
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){
+  color-scheme:dark;
+  --bg:#0e1110;--surface:#161a18;--surface-2:#1c211f;--line:#2a302d;--line-2:#3a413d;
+  --ink:#eef0ec;--ink-2:#b7bdb8;--ink-3:#868d88;
+  --accent:#3987e5;--accent-ink:#86b6ef;--accent-wash:rgba(57,135,229,.12);
+  --s-img:#3987e5;--s-dev:#d95926;--s-bg:#6f7671;
+  --grid:rgba(238,240,236,.04);--sweep:rgba(57,135,229,.28);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0e1110;--surface:#161a18;--surface-2:#1c211f;--line:#2a302d;--line-2:#3a413d;
+  --ink:#eef0ec;--ink-2:#b7bdb8;--ink-3:#868d88;
+  --accent:#3987e5;--accent-ink:#86b6ef;--accent-wash:rgba(57,135,229,.12);
+  --s-img:#3987e5;--s-dev:#d95926;--s-bg:#6f7671;
+  --grid:rgba(238,240,236,.04);--sweep:rgba(57,135,229,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--sans);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:32px 32px}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+.mono{font-family:var(--mono);letter-spacing:.06em}
+.tag{font:11px/1 var(--mono);letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase}
+
+/* 顶栏 */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand b{font-size:17px;letter-spacing:.02em}.brand b span{color:var(--accent)}
+.brand svg{width:26px;height:26px}
+.top nav{display:flex;gap:18px;margin-left:24px}
+.top nav a{font:12px/1 var(--mono);letter-spacing:.1em;color:var(--ink-2);text-decoration:none;text-transform:uppercase}
+.top nav a:hover{color:var(--accent)}
+.top .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);
+  border-radius:6px;padding:7px 12px;font:13px/1 var(--sans);cursor:pointer;text-decoration:none}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{filter:brightness(1.08);color:#fff}
+.btn svg{width:15px;height:15px}
+.iconbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:6px;width:32px;height:32px;cursor:pointer}
+
+/* 首屏 */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:56px 0 40px}
+.hero h1{font-size:40px;line-height:1.15;margin:14px 0 14px;letter-spacing:.01em;font-weight:650}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{color:var(--ink-2);margin:0 0 22px;max-width:34em}
+.idline{display:flex;align-items:center;gap:10px}
+.idline i{display:block;width:28px;height:1px;background:var(--ink-3)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:var(--surface);border-radius:8px;overflow:hidden}
+.stat{padding:14px 16px;border-right:1px solid var(--line);position:relative}
+.stat:last-child{border-right:0}
+.stat .k{display:flex;align-items:center;gap:6px;font:11px/1 var(--mono);letter-spacing:.1em;color:var(--ink-3)}
+.stat .k i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.stat .v{font-size:30px;font-weight:600;margin-top:8px;line-height:1}
+.stat .d{font-size:12px;color:var(--ink-3);margin-top:6px}
+.updated{margin-top:14px;font:12px/1.4 var(--mono);color:var(--ink-3);letter-spacing:.06em}
+.updated b{color:var(--ink-2);font-weight:500}
+
+/* 雷达 */
+.radar{position:relative;aspect-ratio:1;max-width:440px;width:100%;justify-self:center}
+.radar svg{width:100%;height:100%;overflow:visible}
+.radar .ring{fill:none;stroke:var(--line-2);stroke-width:1}
+.radar .axis{stroke:var(--line);stroke-width:1}
+.radar .rlabel{font:10px var(--mono);fill:var(--ink-3);letter-spacing:.1em}
+.radar .sweep{transform-origin:200px 200px;animation:sweep 6s linear infinite}
+.radar .blip{cursor:pointer}
+.radar .blip circle.core{stroke:var(--surface);stroke-width:2}
+.radar .blip circle.halo{fill:none;stroke-width:1.5;opacity:0;transform-box:fill-box;transform-origin:center}
+.radar .blip.ping circle.halo{animation:ping 1.6s ease-out}
+.radar .blip:hover circle.core,.radar .blip:focus circle.core{r:7}
+@keyframes sweep{to{transform:rotate(360deg)}}
+@keyframes ping{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(3.2)}}
+.radar .corner{position:absolute;font:10px/1.5 var(--mono);color:var(--ink-3);letter-spacing:.1em}
+.radar .corner.tl{top:0;left:0}.radar .corner.br{bottom:0;right:0;text-align:right}
+
+/* 区块 */
+section{padding:34px 0}
+.sec-h{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:18px}
+.sec-h .no{font:12px/1 var(--mono);color:var(--accent);letter-spacing:.12em}
+.sec-h h2{margin:0;font-size:20px;font-weight:600}
+.sec-h .sub{color:var(--ink-3);font-size:13px;margin-left:auto}
+
+/* 筛选 */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:6px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--ink-2);padding:6px 12px;font:13px/1 var(--sans);cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent-wash);color:var(--accent-ink);font-weight:600}
+.seg button i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:0}
+.search{flex:1 1 200px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:6px;padding:7px 10px;font:14px var(--sans)}
+.count{font:12px var(--mono);color:var(--ink-3);letter-spacing:.06em}
+
+/* 条目 */
+.feed{display:grid;gap:10px}
+.card{display:grid;grid-template-columns:4px 1fr;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.card .bar{background:var(--s-bg)}
+.card[data-lv="影像设备"] .bar{background:var(--s-img)}.card[data-lv="医疗器械"] .bar{background:var(--s-dev)}
+.card .in{padding:12px 16px}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font:12px/1.4 var(--mono);color:var(--ink-3);letter-spacing:.04em}
+.card .lv{font-weight:600;color:var(--ink-2)}
+.card h3{margin:6px 0 0;font-size:15.5px;line-height:1.5;font-weight:600}
+.card h3 a{text-decoration:none}.card h3 a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.card .snip{margin:6px 0 0;color:var(--ink-2);font-size:14px}
+.card .ai{margin:10px 0 0;padding:10px 12px;border-radius:6px;background:var(--accent-wash);font-size:14px;color:var(--ink)}
+.card .ai .tag{color:var(--accent-ink);margin-right:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:12px;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:1px 7px;background:var(--surface-2)}
+.more{margin-top:14px;text-align:center}
+.empty{color:var(--ink-3);padding:24px 0;text-align:center}
+
+/* 图表 */
+.charts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 16px 12px;position:relative;min-width:0}
+.chart.wide{grid-column:1/-1}
+.chart header{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.chart h3{margin:0;font-size:15px;font-weight:600}
+.chart .desc{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+.chart header .tools{margin-left:auto;display:flex;gap:6px;align-items:center}
+.chart select{border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:6px;padding:4px 6px;font:12.5px var(--sans)}
+.chart .plot{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .gridl{stroke:var(--line);stroke-width:1}
+.chart .axisl{stroke:var(--line-2);stroke-width:1}
+.chart .tick{font:11px var(--mono);fill:var(--ink-3);font-variant-numeric:tabular-nums}
+.chart .vlabel{font:11px var(--mono);fill:var(--ink-2)}
+.chart .mark{transition:opacity .15s}
+.chart .hit{fill:transparent;cursor:default}
+.chart .dim .mark{opacity:.35}.chart .dim .mark.on{opacity:1}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin:2px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.legend i.hatch{background-image:repeating-linear-gradient(45deg,var(--s-img) 0 2px,transparent 2px 5px)!important;border:1px solid var(--s-img)}
+.note{font-size:12px;color:var(--ink-3);margin-top:6px}
+table.data{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+table.data th,table.data td{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left}
+table.data td.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+.tip{position:fixed;z-index:60;pointer-events:none;background:var(--surface);border:1px solid var(--line-2);border-radius:6px;
+  padding:8px 10px;font-size:12.5px;box-shadow:0 6px 24px rgba(0,0,0,.12);max-width:300px;opacity:0;transition:opacity .1s}
+.tip.on{opacity:1}
+.tip .tv{font-weight:650;font-size:14px;color:var(--ink)}
+.tip .tl{color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+.tip .row{display:flex;align-items:center;gap:8px}
+.tip .row i{width:12px;height:2px;display:inline-block}
+
+/* 档案 */
+.arch{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
+.arch a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:9px 11px;text-decoration:none}
+.arch a:hover{border-color:var(--accent)}
+.arch a b{display:block;font:13px var(--mono);letter-spacing:.04em;font-weight:500}
+.arch a small{color:var(--ink-3);font-size:12px}
+.arch-h{font:12px var(--mono);color:var(--ink-3);letter-spacing:.1em;margin:16px 0 8px}
+
+footer{border-top:1px solid var(--line);margin-top:30px;padding:22px 0 60px;color:var(--ink-3);font-size:12.5px}
+footer p{margin:4px 0}
+
+/* AI 抽屉 */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:var(--surface);border-left:1px solid var(--line-2);
+  z-index:50;transform:translateX(102%);transition:transform .25s ease;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.08)}
+.drawer.open{transform:none}
+.drawer .dh{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.drawer .dh b{font-size:15px}.drawer .dh .sp{flex:1}
+.drawer .body{flex:1;overflow:auto;padding:14px 16px}
+.msg{margin:0 0 14px}
+.msg .who{font:11px var(--mono);color:var(--ink-3);letter-spacing:.1em;margin-bottom:4px}
+.msg .txt{white-space:pre-wrap;font-size:14px;line-height:1.7}
+.msg.user .txt{background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.msg .txt a.cite{font:11px var(--mono);color:var(--accent);text-decoration:none;vertical-align:super;padding:0 1px}
+.msg .refs{margin-top:8px;font-size:12.5px;color:var(--ink-3)}
+.msg .refs a{color:var(--ink-2)}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.presets button{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:5px 10px;font:12.5px var(--sans);cursor:pointer}
+.presets button:hover{border-color:var(--accent);color:var(--accent)}
+.drawer form{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+.drawer textarea{flex:1;resize:none;height:64px;border:1px solid var(--line-2);background:var(--bg);color:var(--ink);border-radius:6px;padding:8px;font:14px var(--sans)}
+.keybar{display:flex;align-items:center;gap:8px;padding:8px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-3)}
+.keybar button{border:0;background:none;color:var(--accent);cursor:pointer;font:12px var(--sans);padding:0}
+
+/* key 引导弹窗 */
+.modal{position:fixed;inset:0;z-index:70;background:rgba(10,14,12,.45);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.modal .box{background:var(--surface);border:1px solid var(--line-2);border-radius:10px;max-width:520px;width:100%;padding:22px;max-height:92vh;overflow:auto}
+.modal h3{margin:0 0 4px;font-size:18px}
+.modal ol{padding-left:20px;margin:12px 0}
+.modal li{margin:6px 0}
+.modal input{width:100%;border:1px solid var(--line-2);background:var(--bg);color:var(--ink);border-radius:6px;padding:9px 10px;font:14px var(--mono)}
+.modal .warn{font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:6px;padding:8px 10px;margin:12px 0}
+.modal .row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+
+/* 报告页 */
+.report-h{padding:40px 0 10px}
+.report-h h1{margin:8px 0 6px;font-size:28px}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;padding-top:32px}
+  .hero h1{font-size:30px}
+  .radar{max-width:320px}
+  .charts{grid-template-columns:1fr}
+  .top nav{display:none}
+}
+@media (max-width:520px){
+  .stats{grid-template-columns:1fr}
+  .stat{border-right:0;border-bottom:1px solid var(--line)}
+  .stat:last-child{border-bottom:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .radar .sweep,.radar .blip.ping circle.halo{animation:none}
+  .card,.drawer{transition:none}
+}
+/* 窄屏不横向溢出 */
+.hero>*,.card .in,.chart,.filters{min-width:0}
+.idline{flex-wrap:wrap}
+.card h3,.updated,.hero p.lead{overflow-wrap:anywhere}
+.seg{flex-wrap:wrap}
+@media (max-width:520px){
+  .hero h1{font-size:27px}
+  .top .wrap{gap:8px}
+  .brand b{font-size:15px}
+  .chart header{flex-wrap:wrap}
+  .chart header .tools{margin-left:0}
+}
+.drawer:not(.open){visibility:hidden;transition:transform .25s ease,visibility 0s .25s}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="var(--line-2)"/><circle cx="16" cy="16" r="8" fill="none" stroke="var(--line-2)"/><path d="M16 16 L16 2 A14 14 0 0 1 28.1 9 Z" fill="var(--accent)" opacity=".35"/><line x1="16" y1="16" x2="16" y2="2" stroke="var(--accent)" stroke-width="1.5"/><circle cx="22" cy="11" r="2" fill="var(--s-dev)"/><circle cx="16" cy="16" r="1.6" fill="var(--ink)"/></svg>
+    <b>MedReg <span>Radar</span></b>
+  </a>
+  <nav><a href="#feed-sec">动态</a><a href="#data-sec">数据</a><a href="#arch-sec">档案</a></nav>
+  <span class="sp"></span>
+  <button class="iconbtn" id="theme" title="切换亮色 / 暗色" aria-label="切换亮色或暗色">◐</button>
+  <button class="btn primary" data-open-ai>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12v8H6l-3 3v-3H2z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>问 AI
+  </button>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <div class="idline tag"><i></i>MEDICAL DEVICE REGULATORY MONITOR · 医疗器械法规雷达</div>
+      <h1>法规更新得太快？<br>让雷达替你<em>盯着</em>。</h1>
+      <p class="lead">把分散在各部门网站上的医疗器械法规和政策收拢到一处，按<b>影像设备 / 医疗器械 / 背景</b>分级，配上 AI 解读和问答。为设备工程师、采购和管理人员准备。</p>
+      <div class="stats">
+        <div class="stat"><div class="k"><i style="background:var(--s-img)"></i>影像设备</div><div class="v" id="st0">0</div><div class="d">近 30 天新文件</div></div>
+        <div class="stat"><div class="k"><i style="background:var(--s-dev)"></i>医疗器械</div><div class="v" id="st1">0</div><div class="d">近 30 天新文件</div></div>
+        <div class="stat"><div class="k"><i style="background:var(--s-bg)"></i>背景</div><div class="v" id="st2">0</div><div class="d">近 30 天新文件</div></div>
+      </div>
+      <div class="updated">最近更新 <b>2026-10-27</b> · 收录 <b>112</b> 条 · 来源：中国政府网政策文件库、国家药监局</div>
+    </div>
+    <div class="radar" aria-label="雷达图：每个点是一份新文件，越靠中心越和影像设备相关">
+      <svg viewBox="0 0 400 400">
+        <defs>
+          <linearGradient id="sw" gradientUnits="userSpaceOnUse" x1="84" y1="62" x2="200" y2="20">
+            <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+            <stop offset="1" stop-color="var(--accent)" stop-opacity=".28"/>
+          </linearGradient>
+        </defs>
+        <circle class="ring" cx="200" cy="200" r="180"/>
+        <circle class="ring" cx="200" cy="200" r="120"/>
+        <circle class="ring" cx="200" cy="200" r="60"/>
+        <line class="axis" x1="20" y1="200" x2="380" y2="200"/>
+        <line class="axis" x1="200" y1="20" x2="200" y2="380"/>
+        <text class="rlabel" x="206" y="146">影像设备</text>
+        <text class="rlabel" x="206" y="86">医疗器械</text>
+        <text class="rlabel" x="206" y="30">背景</text>
+        <g class="sweep">
+          <path d="M200,200 L84.3,62.1 A180,180 0 0 1 200,20 Z" fill="url(#sw)"/>
+          <line x1="200" y1="200" x2="200" y2="20" stroke="var(--accent)" stroke-width="1.5" opacity=".8"/>
+        </g>
+        <g id="blips"></g>
+        <circle cx="200" cy="200" r="3" fill="var(--ink)"/>
+      </svg>
+      <div class="corner tl">SCAN · <span id="radar-window">近 30 天</span></div>
+      <div class="corner br">悬停看标题<br>点击看原文</div>
+    </div>
+  </div>
+
+  <section id="feed-sec">
+    <div class="sec-h"><span class="no">01</span><h2>动态</h2><span class="sub">每条都附官方原文链接</span></div>
+    <div class="filters">
+      <div class="seg" id="f-range" role="group" aria-label="时间范围">
+        <button data-v="30" aria-pressed="true">近 30 天</button><button data-v="90" aria-pressed="false">近 90 天</button><button data-v="all" aria-pressed="false">全部</button>
+      </div>
+      <div class="seg" id="f-lv" role="group" aria-label="分级">
+        <button data-v="全部" aria-pressed="true">全部</button>
+        <button data-v="影像设备" aria-pressed="false"><i style="background:var(--s-img)"></i>影像设备</button>
+        <button data-v="医疗器械" aria-pressed="false"><i style="background:var(--s-dev)"></i>医疗器械</button>
+        <button data-v="背景" aria-pressed="false"><i style="background:var(--s-bg)"></i>背景</button>
+      </div>
+      <input class="search" id="f-q" type="search" placeholder="搜索标题、摘要、文号" aria-label="搜索">
+      <span class="count" id="count"></span>
+    </div>
+    <div class="feed" id="feed"></div>
+    <div class="more"><button class="btn" id="more" hidden>显示更多</button></div>
+  </section>
+
+  <section id="data-sec">
+    <div class="sec-h"><span class="no">02</span><h2>数据</h2><span class="sub">悬停看数值，点“表格”看全部数字</span></div>
+    <div class="charts">
+      <div class="chart wide">
+        <header><div><h3>历年政策文件数</h3><p class="desc">中国政府网政策文件库中，含所选关键词的文件数（按发布年份）</p></div>
+          <div class="tools"><select id="trend-q" aria-label="关键词"></select><button class="btn" data-table="trend" aria-pressed="false">表格</button></div></header>
+        <div class="legend"><span><i style="background:var(--s-img)"></i>全年</span><span><i class="hatch"></i>今年（截至今天，未满一年）</span></div>
+        <div class="plot" id="c-trend"></div>
+      </div>
+      <div class="chart">
+        <header><div><h3>药监局每月批准注册的医疗器械产品</h3><p class="desc">来自“批准注册 N 个医疗器械产品”的月度公告</p></div>
+          <div class="tools"><button class="btn" data-table="reg" aria-pressed="false">表格</button></div></header>
+        <div class="plot" id="c-reg"></div>
+        <p class="note" id="reg-note"></p>
+      </div>
+      <div class="chart">
+        <header><div><h3>主题分布</h3><p class="desc">收录文件按主题标签计数（一份文件可有多个标签）</p></div>
+          <div class="tools"><button class="btn" data-table="tags" aria-pressed="false">表格</button></div></header>
+        <div class="plot" id="c-tags"></div>
+      </div>
+      <div class="chart wide">
+        <header><div><h3>近 12 个月收录文件</h3><p class="desc">按分级堆叠</p></div>
+          <div class="tools"><button class="btn" data-table="month" aria-pressed="false">表格</button></div></header>
+        <div class="legend"><span><i style="background:var(--s-img)"></i>影像设备</span><span><i style="background:var(--s-dev)"></i>医疗器械</span><span><i style="background:var(--s-bg)"></i>背景</span></div>
+        <div class="plot" id="c-month"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="arch-sec">
+    <div class="sec-h"><span class="no">03</span><h2>档案</h2><span class="sub">周报与月报，同一份数据的两种时间窗口</span></div>
+    <div class="arch-h">周报 · WEEKLY</div><div class="arch" id="arch-weekly"></div>
+    <div class="arch-h">月报 · MONTHLY</div><div class="arch" id="arch-monthly"></div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <p>本站由程序从公开渠道自动整理，<b>非官方发布</b>。分级、标签和 AI 解读由程序生成，可能有误，一切以官方原文为准。本站不提供法律或合规意见。</p>
+  <p>国家药监局的内容由人工在浏览器中保存后导入；本项目不绕过任何网站的访问限制。</p>
+  <p class="mono">MEDREG RADAR · OPEN SOURCE · MIT</p>
+</div></footer>
+
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="AI 问答">
+  <div class="dh"><b>问 AI</b><span class="tag">DeepSeek</span><span class="sp"></span><button class="iconbtn" id="close-ai" aria-label="关闭">✕</button></div>
+  <div class="body">
+    <p class="note" style="margin-top:0">AI 只根据本站收录的文件回答，并标出出处编号。资料里没有的，它会说没有。</p>
+    <div class="presets" id="presets">
+      <button>整理本月和影像设备相关的文件</button>
+      <button>最近有哪些注册审评方面的新规定？</button>
+      <button>最近的文件对医院设备科工程师有什么影响？</button>
+      <button>医用设备集中采购最近有什么新要求？</button>
+    </div>
+    <div id="chat"></div>
+  </div>
+  <form id="askform"><textarea id="ask" placeholder="输入问题，回车发送（Shift+回车换行）" aria-label="问题"></textarea><button class="btn primary" id="send" type="submit">发送</button></form>
+  <div class="keybar"><span id="keystate"></span><span class="sp" style="flex:1"></span><button id="key-change" type="button">换一个</button><button id="key-clear" type="button">清除 key</button></div>
+</aside>
+
+<div class="modal" id="keymodal" role="dialog" aria-modal="true" aria-labelledby="km-t">
+  <div class="box">
+    <h3 id="km-t">先填一个你自己的 AI key</h3>
+    <p class="note" style="margin:0">问答功能用的是 DeepSeek 的大模型，按用量从你自己的账户扣费，单次问答的用量很小。三步搞定：</p>
+    <ol>
+      <li>打开 <a href="https://platform.deepseek.com" target="_blank" rel="noopener">platform.deepseek.com</a>，注册并登录。</li>
+      <li>左侧点“充值”，充一点点就够用很久（比如 10 元）。</li>
+      <li>左侧点“API keys” → “创建 API key”，起个名字，<b>复制</b>那串以 <code>sk-</code> 开头的字符，粘到下面。</li>
+    </ol>
+    <input id="keyinput" type="password" placeholder="sk-……" autocomplete="off" aria-label="API key">
+    <p class="note" id="key-err" style="color:var(--s-dev)"></p>
+    <div class="warn">你的 key <b>只保存在这个浏览器里</b>，直接发给 DeepSeek，不经过本站、不会上传到任何地方。在公用电脑上用完请点“清除 key”。建议在 DeepSeek 后台给 key 设一个消费上限。</div>
+    <div class="row"><button class="btn" id="key-cancel" type="button">以后再说</button><button class="btn primary" id="key-save" type="button">保存</button></div>
+  </div>
+</div>
+
+<script>window.MR = {"today": "2026-10-27", "items": [{"url": "https://www.gov.cn/zhengce/202610/content_7083758.htm", "title": "推动技术与市场高效对接——多部门详解科技兴商", "date": "2026-10-20", "source": "中国政府网·政策解读", "level": "背景", "tags": ["产业规划"], "summary": "供给，加快产出一批高性价比、可复制的智能解决方案；推动脑机接口、具身智能等智能终端攻关迭代，发展智能工业母机、智能农业机械、智能医疗器械，满足千行百业智能化需求；畅通产销衔接。培育一批优质人工智能应用"}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxpzhzhcchpgg/20261015161757149.html", "title": "国家药监局关于批准注册258个医疗器械产品的公告（2026年9月）（2026年第101号）", "date": "2026-10-15", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["注册审评"]}, {"url": "https://www.nmpa.gov.cn/ylqx/ylqxggtg/20261010160903185.html", "title": "国家药监局关于发布国家医疗器械监督抽检结果的通告（2026年第35号）", "date": "2026-10-10", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["监督检查"]}, {"url": "https://www.gov.cn/zhengce/zhengceku/202610/content_7082724.htm", "title": "关于印发医疗康复护理扩容提升工程实施方案的通知", "date": "2026-10-08", "source": "中国政府网·部门文件", "doc_no": "国卫规划发〔2026〕24号", "level": "背景", "tags": ["注册审评", "产业规划"], "summary": "护理产品。推动将符合条件的康复护理创新医疗器械、药物按程序纳入优先审评审批范围。鼓励高水平医院发挥引领作用，总结脑机接口等产品应用经验，强化康复护理创新成果在医疗卫生机构、社区、家庭等场景落地应用。 （"}, {"url": "https://www.gov.cn/zhengce/zhengceku/202609/content_7082302.htm", "title": "中国人民银行等八部门联合印发《关于金融支持服务业扩能提质的指导意见》", "date": "2026-09-28", "source": "中国政府网·部门文件", "level": "背景", "summary": "探索推广养老床位收费权等质押融资模式，强化对康复护理、医养结合、长期照护等领域的金融支持。拓展特色金融服务场景，支持零售药店扩展专业服务、健康促进等功能，打造“健康驿站”，促进国产医疗设备、原研药仿"}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxqtggtg/20260923100541197.html", "title": "国家药监局关于注销导丝等11个医疗器械注册证书的公告（2026年第95号）", "date": "2026-09-23", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["注册审评"]}, {"url": "https://www.gov.cn/zhengce/202609/content_7081448.htm", "title": "《医药工业发展“十五五”规划》解读", "date": "2026-09-18", "source": "中国政府网·政策解读", "level": "背景", "tags": ["注册审评", "产业规划"], "summary": "增加值的比重稳定在3.6％左右。研发应用走在世界前列，230款创新药和292款创新医疗器械上市应用，在研新药数量跃居全球第二。产业链韧性和安全水平大幅提升，一批高端药用辅料、试剂耗材、医疗器械原材料及核心"}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxpzhzhcchpgg/20260916142811196.html", "title": "国家药监局关于批准注册243个医疗器械产品的公告（2026年8月）（2026年第90号）", "date": "2026-09-16", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["注册审评"]}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxhybzhgg/20260914094604138.html", "title": "国家药监局关于发布YY/T 2029—2026《脑机接口医疗器械 用于人工智能算法的脑电数据集质量要求与评价方法》医疗器械行业标准的公告（2026年第79号）", "date": "2026-09-14", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["标准与分类"]}, {"url": "https://www.gov.cn/zhengce/zhengceku/202609/content_7080736.htm", "title": "市场监督管理所条例", "date": "2026-09-11", "source": "中国政府网·国务院文件", "doc_no": "国令第846号", "level": "背景", "tags": ["监督检查"], "summary": "人民政府市场监督管理部门的职责范围内，开展辖区内市场监督管理工作，履行下列职责： （一）办理个体工商户、农民专业合作社（联合社）及其分支机构登记相关事项； （二）承担食品生产经营，药品、医疗器械、化妆品"}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxpzhzhcchpgg/20260819155514139.html", "title": "国家药监局关于批准注册323个医疗器械产品的公告（2026年7月）（2026年第77号）", "date": "2026-08-19", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["注册审评"]}, {"url": "https://www.gov.cn/zhengce/202608/content_7078574.htm", "title": "《全民医疗保障“十五五”规划》解读", "date": "2026-08-19", "source": "中国政府网·政策解读", "level": "背景", "tags": ["产业规划"], "summary": "和高值医用耗材金额占比继续纳入“十五五”时期发展目标，确保规划实施的连续性。同时，结合“十五五”时期改革发展任务和基金可持续发展要求，将长期护理保险制度覆盖统筹地区数量、职工和居民基本医疗保险基金累计"}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxqtggtg/20260814102601109.html", "title": "国家药监局关于注销医用提取机等16个医疗器械注册证书的公告（2026年第74号）", "date": "2026-08-14", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["注册审评"]}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxhybzhgg/20260814170757114.html", "title": "国家药监局关于发布《牙科学 光固化机》等46项医疗器械行业标准的公告（2026年第76号）", "date": "2026-08-14", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["标准与分类"]}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxhybzhgg/20260724141329154.html", "title": "国家药监局关于发布YY 0830—2011《浅表组织超声治疗设备》等4项医疗器械行业标准修改单的公告（2026年第68号）", "date": "2026-07-24", "source": "国家药监局（手动导入）", "level": "影像设备", "tags": ["标准与分类"]}, {"url": "https://www.nmpa.gov.cn/ylqx/ylqxggtg/20260723174119192.html", "title": "国家药监局关于发布国家医疗器械监督抽检结果的通告（2026年第26号）", "date": "2026-07-23", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["监督检查"]}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxpzhzhcchpgg/20260715163705171.html", "title": "国家药监局关于批准注册323个医疗器械产品的公告（2026年6月）（2026年第65号）", "date": "2026-07-15", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["注册审评"]}, {"url": "https://www.gov.cn/zhengce/zhengceku/202607/content_7075358.htm", "title": "国家卫生健康委 国家中医药管理局 国家疾病预防控制局关于进一步做好公立医疗卫生机构医用设备集中采购工作的通知", "date": "2026-07-14", "source": "中国政府网·部门文件", "doc_no": "国卫财务函〔2026〕131号", "level": "医疗器械", "tags": ["采购与更新"], "summary": "关切。 本通知自印发之日起施行，与医用设备集中采购相关的其他未尽事宜，按照政府采购现行管理规定执行。《卫生部关于进一步加强医疗器械集中采购管理的通知》（卫规财发〔2007〕208号）同步废止。《卫生部"}, {"url": "https://www.gov.cn/zhengce/202607/content_7075361.htm", "title": "《关于进一步做好公立医疗卫生机构医用设备集中采购工作的通知》文件政策解读", "date": "2026-07-14", "source": "中国政府网·政策解读", "level": "医疗器械", "tags": ["采购与更新", "产业规划"], "summary": "一、出台背景 为规范有序推进医用设备集中采购工作开展，提升公立医疗卫生机构资金使用效益，加强医药卫生领域廉政建设，保障人民群众健康权益，促进卫生健康事业高质量发展，根据《政府采购法》等有关法律法规，"}, {"url": "https://www.gov.cn/zhengce/202607/content_7075288.htm", "title": "这份规划，为“十五五”国民健康绘就“路线图”", "date": "2026-07-13", "source": "中国政府网·政策解读", "level": "背景", "tags": ["监督检查", "产业规划"], "summary": "设备、脑机接口等领域科技攻关；加快健康产业提质升级，全链条支持创新药和医疗器械发展应用……未来五年，科技红利将更多惠及临床一线。 建设国家智慧健康检验检查结果跨省共享平台，推动电子健康档案首页数据实现"}, {"url": "https://www.gov.cn/zhengce/zhengceku/202607/content_7075214.htm", "title": "国务院关于印发《国民健康“十五五”规划》的通知", "date": "2026-07-13", "source": "中国政府网·国务院文件", "doc_no": "国发〔2026〕23号", "level": "背景", "tags": ["召回与不良事件", "标准与分类", "产业规划"], "summary": "数字标签应用。深入实施药品标准提高行动计划，提高仿制药质量和疗效一致性评价质效，加强上市后药品不良反应和医疗器械不良事件监测，强化药品安全全链条监管。 （四）强化生物安全和卫生健康信息安全 完善国家"}, {"url": "https://www.gov.cn/zhengce/zhengceku/202607/content_7075249.htm", "title": "关于印发《康复辅助器具产业扩能提质三年行动方案（2026-2028年）》的通知", "date": "2026-07-13", "source": "中国政府网·部门文件", "doc_no": "民函〔2026〕48号", "level": "背景", "tags": ["产业规划"], "summary": "知名品牌，鼓励行业组织开展产业创新发掘活动。利用高端医疗装备推广应用项目，支持康复辅具产业创新发展。 强化展示推广。组织开展康复辅具行业交流活动，按照市场化模式持续合规办好中国康复辅助器具产业创新发展"}, {"url": "https://www.gov.cn/zhengce/202607/content_7074413.htm", "title": "建设科技强国 支撑高质量发展——访科技部党组书记、部长阴和俊", "date": "2026-07-06", "source": "中国政府网·政策解读", "level": "背景", "tags": ["产业规划"], "summary": "，加快推动重大疾病防治、药品与医疗器械等领域技术创新，提升安全生产、重大灾害应对等领域技术装备水平，加快推进生态系统保护与修复等领域技术攻关和成果应用，用科技让人民的生活更美好。 第二，推动科技创新和"}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxqtggtg/20260701104619178.html", "title": "国家药监局关于注销电子听诊器等31个医疗器械注册证书的公告（2026年第60号）", "date": "2026-07-01", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["注册审评"]}, {"url": "https://www.nmpa.gov.cn/xxgk/ggtg/ylqxggtg/ylqxqtggtg/20260630140449128.html", "title": "国家药监局关于发布《脑机接口医疗器械产品分类界定指导原则》《脑机接口医疗器械通用名称命名指导原则》等2项医疗器械产品指导原则的通告（2026年第24号）", "date": "2026-06-30", "source": "国家药监局（手动导入）", "level": "医疗器械", "tags": ["标准与分类"]}], "allItems": [{"title": "推动技术与市场高效对接——多部门详解科技兴商", "date": "2026-10-20", "level": "背景"}, {"title": "国家药监局关于批准注册258个医疗器械产品的公告（2026年9月）（2026年第101号）", "date": "2026-10-15", "level": "医疗器械"}, {"title": "国家药监局关于发布国家医疗器械监督抽检结果的通告（2026年第35号）", "date": "2026-10-10", "level": "医疗器械"}, {"title": "关于印发医疗康复护理扩容提升工程实施方案的通知", "date": "2026-10-08", "level": "背景"}, {"title": "中国人民银行等八部门联合印发《关于金融支持服务业扩能提质的指导意见》", "date": "2026-09-28", "level": "背景"}, {"title": "国家药监局关于注销导丝等11个医疗器械注册证书的公告（2026年第95号）", "date": "2026-09-23", "level": "医疗器械"}, {"title": "《医药工业发展“十五五”规划》解读", "date": "2026-09-18", "level": "背景"}, {"title": "国家药监局关于批准注册243个医疗器械产品的公告（2026年8月）（2026年第90号）", "date": "2026-09-16", "level": "医疗器械"}, {"title": "国家药监局关于发布YY/T 2029—2026《脑机接口医疗器械 用于人工智能算法的脑电数据集质量要求与评价方法》医疗器械行业标准的公告（2026年第79号）", "date": "2026-09-14", "level": "医疗器械"}, {"title": "市场监督管理所条例", "date": "2026-09-11", "level": "背景"}, {"title": "国家药监局关于批准注册323个医疗器械产品的公告（2026年7月）（2026年第77号）", "date": "2026-08-19", "level": "医疗器械"}, {"title": "《全民医疗保障“十五五”规划》解读", "date": "2026-08-19", "level": "背景"}, {"title": "国家药监局关于注销医用提取机等16个医疗器械注册证书的公告（2026年第74号）", "date": "2026-08-14", "level": "医疗器械"}, {"title": "国家药监局关于发布《牙科学 光固化机》等46项医疗器械行业标准的公告（2026年第76号）", "date": "2026-08-14", "level": "医疗器械"}, {"title": "国家药监局关于发布YY 0830—2011《浅表组织超声治疗设备》等4项医疗器械行业标准修改单的公告（2026年第68号）", "date": "2026-07-24", "level": "影像设备"}, {"title": "国家药监局关于发布国家医疗器械监督抽检结果的通告（2026年第26号）", "date": "2026-07-23", "level": "医疗器械"}, {"title": "国家药监局关于批准注册323个医疗器械产品的公告（2026年6月）（2026年第65号）", "date": "2026-07-15", "level": "医疗器械"}, {"title": "国家卫生健康委 国家中医药管理局 国家疾病预防控制局关于进一步做好公立医疗卫生机构医用设备集中采购工作的通知", "date": "2026-07-14", "level": "医疗器械"}, {"title": "《关于进一步做好公立医疗卫生机构医用设备集中采购工作的通知》文件政策解读", "date": "2026-07-14", "level": "医疗器械"}, {"title": "这份规划，为“十五五”国民健康绘就“路线图”", "date": "2026-07-13", "level": "背景"}, {"title": "国务院关于印发《国民健康“十五五”规划》的通知", "date": "2026-07-13", "level": "背景"}, {"title": "关于印发《康复辅助器具产业扩能提质三年行动方案（2026-2028年）》的通知", "date": "2026-07-13", "level": "背景"}, {"title": "建设科技强国 支撑高质量发展——访科技部党组书记、部长阴和俊", "date": "2026-07-06", "level": "背景"}, {"title": "国家药监局关于注销电子听诊器等31个医疗器械注册证书的公告（2026年第60号）", "date": "2026-07-01", "level": "医疗器械"}, {"title": "国家药监局关于发布《脑机接口医疗器械产品分类界定指导原则》《脑机接口医疗器械通用名称命名指导原则》等2项医疗器械产品指导原则的通告（2026年第24号）", "date": "2026-06-30", "level": "医疗器械"}, {"title": "国务院新闻办发布会介绍利用外资固稳促优有关政策措施", "date": "2026-06-23", "level": "背景"}, {"title": "人力资源社会保障部等4部门关于支持海洋经济发展促进就业创业的通知", "date": "2026-06-16", "level": "背景"}, {"title": "跨省共济，让医保个账资金成为“家庭健康金”（政策解读·问答）", "date": "2026-06-10", "level": "背景"}, {"title": "国家药监局关于批准注册205个医疗器械产品的公告（2026年5月）（2026年第55号）", "date": "2026-06-05", "level": "医疗器械"}, {"title": "国家药监局关于废止《心血管植入物 人工心脏瓣膜 第3部分：经导管植入式人工心脏瓣膜》等10项医疗器械行业标准的公告（2026年第56号）", "date": "2026-06-05", "level": "医疗器械"}, {"title": "关于加快海洋药物和功能制品高质量发展的指导意见", "date": "2026-05-28", "level": "背景"}, {"title": "关于印发家庭病床服务指南（试行）的通知", "date": "2026-05-15", "level": "背景"}, {"title": "国务院办公厅转发海关总署《关于促进综合保税区扩能提质的若干措施》的通知", "date": "2026-04-17", "level": "背景"}, {"title": "全周期、全渠道、全领域——多部门详解药价新规", "date": "2026-04-15", "level": "背景"}, {"title": "以公益性守护人民健康——专家共绘医改未来\"路线图\"", "date": "2026-04-12", "level": "背景"}, {"title": "国家药监局关于“人工智能+药品监管”的实施意见", "date": "2026-04-03", "level": "背景"}, {"title": "《国家药监局关于“人工智能+药品监管”的实施意见》政策解读", "date": "2026-04-03", "level": "背景"}, {"title": "关于开展基层医疗卫生机构医疗质量改善三年行动（2026—2028年）的通知", "date": "2026-04-01", "level": "背景"}, {"title": "国家药监局关于印发药品现代物流规范化建设指导意见的通知", "date": "2026-03-25", "level": "背景"}, {"title": "商务部等9部门印发《关于促进旅行服务出口 扩大入境消费的政策措施》的通知", "date": "2026-03-21", "level": "背景"}, {"title": "起步有力 开局良好——透视2026年中国经济开年表现", "date": "2026-03-17", "level": "背景"}, {"title": "国务院新闻办举行吹风会 解读《政府工作报告》", "date": "2026-03-05", "level": "背景"}, {"title": "多项财税金融支持稳投资促消费政策发布 以更大力度激发民间投资、促进居民消费", "date": "2026-01-21", "level": "背景"}, {"title": "关于实施中小微企业贷款贴息政策的通知", "date": "2026-01-21", "level": "背景"}, {"title": "2026年财政总体支出力度“只增不减”！财政部最新发声", "date": "2026-01-20", "level": "背景"}, {"title": "职工医保个人账户跨省共济有何新变化（政策解读）", "date": "2026-01-18", "level": "背景"}, {"title": "再扩围！医保个人账户跨省共济提速", "date": "2026-01-09", "level": "背景"}, {"title": "《国家医保局 财政部关于做好职工基本医疗保险个人账户跨省共济工作的通知》政策解读", "date": "2026-01-09", "level": "背景"}, {"title": "积极发展新质生产力 扎实推进高质量发展——访国家发展改革委党组书记、主任郑栅洁", "date": "2026-01-06", "level": "背景"}, {"title": "国家药监局关于发布医疗器械出口销售证明管理规定的公告", "date": "2025-12-25", "level": "医疗器械"}, {"title": "海关总署关于印发《海关支持和服务横琴粤澳深度合作区建设新一轮措施》的通知", "date": "2025-12-23", "level": "背景"}, {"title": "国家药监局关于发布互联网药品医疗器械信息服务备案管理规定的公告", "date": "2025-12-23", "level": "医疗器械"}, {"title": "加快建设健康中国", "date": "2025-12-18", "level": "背景"}, {"title": "以高效严格监管促进创新药和医疗器械发展——访国家药品监督管理局党组书记、局长李利", "date": "2025-12-10", "level": "医疗器械"}, {"title": "健全多层次医疗保障体系 筑牢民生保障底线——访国家医保局局长章轲", "date": "2025-12-03", "level": "背景"}, {"title": "到2027年我国将形成3个万亿级消费领域！", "date": "2025-11-26", "level": "背景"}, {"title": "国家药监局关于优化境外生产药品补充申请审评审批程序试点工作的通知", "date": "2025-11-11", "level": "背景"}, {"title": "国家药监局关于发布医疗器械生产质量管理规范的公告", "date": "2025-11-06", "level": "医疗器械"}, {"title": "关于促进和规范“人工智能+医疗卫生”应用发展的实施意见", "date": "2025-11-04", "level": "影像设备"}, {"title": "更给力！海南离岛免税购物提质扩容", "date": "2025-10-17", "level": "背景"}, {"title": "国务院办公厅关于印发《国家地震应急预案》的通知", "date": "2025-10-17", "level": "背景"}, {"title": "司法部、国家卫生健康委负责人就《生物医学新技术临床研究和临床转化应用管理条例》答记者问", "date": "2025-10-11", "level": "背景"}, {"title": "生物医学新技术临床研究和临床转化应用管理条例", "date": "2025-10-10", "level": "背景"}, {"title": "智慧监测、科学救治：传染病防治新法新在哪？", "date": "2025-09-23", "level": "背景"}, {"title": "国家药监局关于发布中药生产监督管理专门规定的公告", "date": "2025-09-09", "level": "背景"}, {"title": "《中药生产监督管理专门规定》政策解读", "date": "2025-09-09", "level": "背景"}, {"title": "市场监管总局 国家卫生健康委 国家中医药局关于发布《医疗广告认定指南》的公告", "date": "2025-08-13", "level": "背景"}, {"title": "七部门关于推动脑机接口产业创新发展的实施意见", "date": "2025-08-07", "level": "背景"}, {"title": "市场监管总局 工业和信息化部关于印发《计量支撑产业新质生产力发展行动方案（2025—2030年）》的通知", "date": "2025-07-17", "level": "背景"}, {"title": "试点10年，创新探索再次提速加力——服务业开放，“解锁”哪些新机会？", "date": "2025-06-10", "level": "背景"}, {"title": "国家药监局关于发布医疗器械网络销售质量管理规范的公告", "date": "2025-04-29", "level": "医疗器械"}, {"title": "关于明确部分货物、物品不再按进出境特殊物品监管的公告", "date": "2025-04-28", "level": "背景"}, {"title": "《市场准入负面清单（2025年版）》正式发布——市场准入限制进一步放宽", "date": "2025-04-25", "level": "背景"}, {"title": "重大部署！我国新版市场准入负面清单亮相", "date": "2025-04-24", "level": "影像设备"}, {"title": "工业和信息化部等七部门关于印发《医药工业数智化转型实施方案（2025—2030年）》的通知", "date": "2025-04-24", "level": "背景"}, {"title": "国家发展改革委有关负责人就《市场准入负面清单（2025年版）》答记者问", "date": "2025-04-24", "level": "影像设备"}, {"title": "《医药工业数智化转型实施方案(2025—2030年)》解读", "date": "2025-04-24", "level": "背景"}, {"title": "国家药监局 海关总署关于允许进口牛黄试点用于中成药生产有关事项的公告", "date": "2025-04-21", "level": "背景"}, {"title": "国家药监局关于进一步调整和优化进口医疗器械产品在中国境内企业生产有关事项的公告", "date": "2025-03-19", "level": "医疗器械"}, {"title": "海关总署 国家移民局 中国民航局关于进一步促进航空口岸通关便利化若干措施的通知", "date": "2025-03-05", "level": "背景"}, {"title": "国务院办公厅关于转发商务部、国家发展改革委《2025年稳外资行动方案》的通知", "date": "2025-02-19", "level": "背景"}, {"title": "国家药监局综合司关于印发2025年药品检验能力验证计划的通知", "date": "2025-01-23", "level": "背景"}, {"title": "国家药监局综合司关于做好有关改革试点经验推广落实工作的通知", "date": "2025-01-16", "level": "背景"}, {"title": "全面深化监管改革 缩短临床试验审评审批时限——加快创新药和医疗器械上市", "date": "2025-01-12", "level": "影像设备"}, {"title": "国务院办公厅关于全面深化药品医疗器械监管改革促进医药产业高质量发展的意见", "date": "2025-01-03", "level": "医疗器械"}, {"title": "《关于全面深化药品医疗器械监管改革促进医药产业高质量发展的意见》政策解读", "date": "2025-01-03", "level": "影像设备"}, {"title": "国务院关于修改和废止部分行政法规的决定", "date": "2024-12-13", "level": "背景"}, {"title": "工业和信息化部等十二部门关于印发《5G规模化应用“扬帆”行动升级方案》的通知", "date": "2024-11-26", "level": "背景"}, {"title": "关于印发重点中心乡镇卫生院建设参考标准的通知", "date": "2024-08-01", "level": "影像设备"}, {"title": "国务院办公厅关于印发《深化医药卫生体制改革2024年重点工作任务》的通知", "date": "2024-06-06", "level": "背景"}, {"title": "国际邮轮在中华人民共和国港口靠港补给的规定", "date": "2024-04-26", "level": "背景"}, {"title": "国务院关于印发《推动大规模设备更新和消费品以旧换新行动方案》的通知", "date": "2024-03-13", "level": "背景"}, {"title": "国务院办公厅关于印发《国家自然灾害救助应急预案》的通知", "date": "2024-02-04", "level": "背景"}, {"title": "教育部办公厅关于印发《服务健康事业和健康产业人才培养引导性专业指南》的通知", "date": "2024-01-08", "level": "影像设备"}, {"title": "国务院办公厅印发《关于加快内外贸一体化发展的若干措施》的通知", "date": "2023-12-11", "level": "背景"}, {"title": "国务院关于印发《全面对接国际高标准经贸规则推进中国（上海）自由贸易试验区高水平制度型开放总体方案》的通知", "date": "2023-12-07", "level": "背景"}, {"title": "国务院关于《支持北京深化国家服务业扩大开放综合示范区建设工作方案》的批复", "date": "2023-11-23", "level": "背景"}, {"title": "国务院关于印发《河套深港科技创新合作区深圳园区发展规划》的通知", "date": "2023-08-29", "level": "背景"}, {"title": "国务院办公厅关于深入推进跨部门综合监管的指导意见", "date": "2023-02-17", "level": "背景"}, {"title": "国务院办公厅关于印发“十四五”现代物流发展规划的通知", "date": "2022-12-15", "level": "背景"}, {"title": "国务院关于印发广州南沙深化面向世界的粤港澳全面合作总体方案的通知", "date": "2022-06-14", "level": "背景"}, {"title": "国务院办公厅关于印发深化医药卫生体制改革2022年重点工作任务的通知", "date": "2022-05-25", "level": "背景"}, {"title": "国务院办公厅关于印发“十四五”国民健康规划的通知", "date": "2022-05-20", "level": "背景"}, {"title": "国务院关于印发计量发展规划（2021—2035年）的通知", "date": "2022-01-28", "level": "背景"}, {"title": "国务院关于印发“十四五”市场监管现代化规划的通知", "date": "2022-01-27", "level": "背景"}, {"title": "国务院办公厅关于印发国家残疾预防行动计划（2021—2025年）的通知", "date": "2022-01-05", "level": "背景"}, {"title": "国务院关于开展营商环境创新试点工作的意见", "date": "2021-11-25", "level": "背景"}, {"title": "国务院办公厅关于印发“十四五”全民医疗保障规划的通知", "date": "2021-09-29", "level": "背景"}, {"title": "国务院关于印发中国妇女发展纲要和中国儿童发展纲要的通知", "date": "2021-09-27", "level": "背景"}, {"title": "国务院印发关于推进自由贸易试验区贸易投资便利化改革创新若干措施的通知", "date": "2021-09-03", "level": "背景"}, {"title": "国务院办公厅关于印发全国深化“放管服”改革着力培育和激发市场主体活力电视电话会议重点任务分工方案的通知", "date": "2021-07-20", "level": "背景"}, {"title": "国务院关于印发北京、湖南、安徽自由贸易试验区总体方案及浙江自由贸易试验区扩展区域方案的通知", "date": "2020-09-21", "level": "影像设备"}], "trends": {"医疗器械": {"2026": 17, "2025": 31, "2024": 31, "2023": 35, "2022": 38, "2021": 41, "2020": 74, "2019": 45, "2018": 51, "2017": 29, "2016": 28, "2015": 19, "2014": 13, "2013": 14, "2012": 23, "2011": 15, "2010": 18, "2009": 7, "2008": 44, "2007": 1, "2005": 5, "2003": 1, "2000": 1}, "医疗装备": {"2026": 33, "2025": 42, "2024": 57, "2023": 40, "2022": 80, "2021": 68, "2020": 94, "2019": 55, "2018": 41, "2017": 52, "2016": 61, "2015": 36, "2014": 21, "2013": 19, "2012": 37, "2011": 33, "2010": 35, "2009": 17, "2008": 88, "2007": 1, "2005": 2, "2003": 1}, "医用设备": {"2026": 72, "2025": 137, "2024": 176, "2023": 180, "2022": 216, "2021": 230, "2020": 328, "2019": 209, "2018": 192, "2017": 89, "2016": 112, "2015": 75, "2014": 46, "2013": 53, "2012": 65, "2011": 57, "2010": 73, "2009": 35, "2008": 193, "2007": 1, "2005": 5, "2003": 1, "2000": 1, "1996": 1}, "医学影像": {"2026": 7, "2025": 13, "2024": 26, "2023": 24, "2022": 15, "2021": 25, "2020": 23, "2019": 27, "2018": 16, "2017": 14, "2016": 22, "2015": 11, "2014": 4, "2013": 5, "2012": 12, "2011": 4, "2010": 5, "2009": 1, "2008": 19, "2007": 1, "2005": 2, "2003": 1}, "大型医用设备": {"2026": 63, "2025": 99, "2024": 128, "2023": 131, "2022": 160, "2021": 158, "2020": 239, "2019": 133, "2018": 125, "2017": 82, "2016": 95, "2015": 67, "2014": 42, "2013": 43, "2012": 51, "2011": 40, "2010": 46, "2009": 34, "2008": 133, "2005": 3, "1996": 1}, "医疗设备更新": {"2026": 50, "2025": 68, "2024": 98, "2023": 92, "2022": 128, "2021": 121, "2020": 159, "2019": 89, "2018": 86, "2017": 67, "2016": 70, "2015": 53, "2014": 30, "2013": 26, "2012": 43, "2011": 38, "2010": 29, "2009": 18, "2008": 87, "2005": 1, "2000": 1}}, "reports": {"weekly": [{"label": "2026-W44", "count": 0}, {"label": "2026-W43", "count": 1}, {"label": "2026-W42", "count": 1}, {"label": "2026-W41", "count": 2}, {"label": "2026-W40", "count": 1}, {"label": "2026-W39", "count": 1}, {"label": "2026-W38", "count": 3}, {"label": "2026-W37", "count": 1}, {"label": "2026-W36", "count": 0}, {"label": "2026-W35", "count": 0}, {"label": "2026-W34", "count": 2}, {"label": "2026-W33", "count": 2}, {"label": "2026-W32", "count": 0}, {"label": "2026-W31", "count": 0}, {"label": "2026-W30", "count": 2}, {"label": "2026-W29", "count": 6}, {"label": "2026-W28", "count": 1}, {"label": "2026-W27", "count": 2}], "monthly": [{"label": "2026-10", "count": 4}, {"label": "2026-09", "count": 6}, {"label": "2026-08", "count": 4}, {"label": "2026-07", "count": 10}, {"label": "2026-06", "count": 1}]}, "ai": {"base_url": "https://api.deepseek.com", "model": "deepseek-chat"}};</script>
+<script>/* MedReg Radar 前端。数据由 radar.py 嵌在页面里（window.MR），所以直接双击本地文件也能用。
+   所有来自数据的文字都用 textContent 写入，不拼 innerHTML。 */
+(function () {
+  "use strict";
+  var MR = window.MR;
+  var LEVELS = ["影像设备", "医疗器械", "背景"];
+  var LV_VAR = { "影像设备": "--s-img", "医疗器械": "--s-dev", "背景": "--s-bg" };
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var css = function (v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+    del: function (k) { try { localStorage.removeItem(k); } catch (e) {} }
+  };
+  function el(tag, attrs, kids) {
+    var n = document.createElement(tag);
+    for (var k in attrs || {}) {
+      if (k === "text") n.textContent = attrs[k];
+      else if (k === "cls") n.className = attrs[k];
+      else n.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { if (c) n.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return n;
+  }
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function sv(tag, attrs) {
+    var n = document.createElementNS(SVGNS, tag);
+    for (var k in attrs || {}) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  function daysAgo(n) { var d = new Date(MR.today + "T00:00:00"); d.setDate(d.getDate() - n); return d.toISOString().slice(0, 10); }
+  function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  var items = MR.items.slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+
+  /* ---------- 主题 ---------- */
+  var root = document.documentElement;
+  var saved = store.get("mr_theme");
+  if (saved) root.setAttribute("data-theme", saved);
+  $("#theme").addEventListener("click", function () {
+    var dark = root.getAttribute("data-theme") ? root.getAttribute("data-theme") === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = dark ? "light" : "dark";
+    root.setAttribute("data-theme", next); store.set("mr_theme", next);
+    renderCharts();
+  });
+
+  /* ---------- 首屏数字 ---------- */
+  var d30 = daysAgo(30), recent = items.filter(function (i) { return i.date >= d30; });
+  LEVELS.forEach(function (lv, k) {
+    var n = recent.filter(function (i) { return i.level === lv; }).length;
+    $("#st" + k).textContent = n;
+  });
+
+  /* ---------- 提示框 ---------- */
+  var tip = (function () {
+    var box = el("div", { cls: "tip", role: "status" }); document.body.appendChild(box);
+    return {
+      show: function (e, rows) {
+        box.textContent = "";
+        rows.forEach(function (r) {
+          if (r.key) { var row = el("div", { cls: "row" }, [el("i", { style: "background:" + r.key }), el("span", { cls: "tv", text: r.v }), el("span", { text: r.l })]); box.appendChild(row); }
+          else box.appendChild(el("div", { cls: r[1] || "tv", text: r[0] }));
+        });
+        var x = e.clientX + 14, y = e.clientY + 14;
+        box.classList.add("on");
+        var w = box.offsetWidth, h = box.offsetHeight;
+        if (x + w > innerWidth - 8) x = e.clientX - w - 14;
+        if (y + h > innerHeight - 8) y = e.clientY - h - 14;
+        box.style.left = x + "px"; box.style.top = y + "px";
+      },
+      hide: function () { box.classList.remove("on"); }
+    };
+  })();
+
+  /* ---------- 雷达 ---------- */
+  (function radar() {
+    var svg = $("#radar-svg"), C = 200, R = { "影像设备": 62, "医疗器械": 122, "背景": 178 };
+    var pool = recent.length >= 6 ? recent : items.filter(function (i) { return i.date >= daysAgo(90); });
+    $("#radar-window").textContent = pool === recent ? "近 30 天" : "近 90 天";
+    var blips = [];
+    pool.slice(0, 60).forEach(function (it) {
+      var h = hash(it.url), a = (h % 3600) / 10, jitter = ((h >> 12) % 24) - 12;
+      var r = R[it.level] + jitter, rad = a * Math.PI / 180;
+      var x = C + r * Math.sin(rad), y = C - r * Math.cos(rad);
+      var g = sv("g", { "class": "blip", tabindex: "0", role: "link" });
+      var color = "var(" + LV_VAR[it.level] + ")";
+      g.appendChild(sv("circle", { "class": "halo", cx: x, cy: y, r: 5, stroke: color }));
+      g.appendChild(sv("circle", { "class": "core", cx: x, cy: y, r: 5, fill: color }));
+      var label = it.level + " · " + it.date + "\n" + it.title;
+      g.setAttribute("aria-label", label);
+      g.addEventListener("pointermove", function (e) { tip.show(e, [[it.title, ""], [it.level + " · " + it.date, "tl"]]); });
+      g.addEventListener("pointerleave", tip.hide);
+      g.addEventListener("focus", function () { var b = g.getBoundingClientRect(); tip.show({ clientX: b.right, clientY: b.top }, [[it.title, ""], [it.level + " · " + it.date, "tl"]]); });
+      g.addEventListener("blur", tip.hide);
+      g.addEventListener("click", function () { window.open(it.url, "_blank", "noopener"); });
+      g.addEventListener("keydown", function (e) { if (e.key === "Enter") window.open(it.url, "_blank", "noopener"); });
+      $("#blips").appendChild(g);
+      blips.push({ a: a, g: g });
+    });
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var t0 = performance.now(), last = 0;
+    function frame(t) {
+      var ang = ((t - t0) / 6000 * 360) % 360;
+      blips.forEach(function (b) {
+        var hit = last <= ang ? (b.a > last && b.a <= ang) : (b.a > last || b.a <= ang);
+        if (hit) { b.g.classList.remove("ping"); void b.g.getBBox(); b.g.classList.add("ping"); }
+      });
+      last = ang; requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+
+  /* ---------- 动态列表 ---------- */
+  var F = { range: "30", lv: "全部", q: "", shown: 30 };
+  function card(it) {
+    var meta = el("div", { cls: "meta" }, [
+      el("span", { cls: "lv", text: it.level }), el("span", { text: it.date }), el("span", { text: it.source })]);
+    if (it.doc_no) meta.appendChild(el("span", { text: it.doc_no }));
+    var a = el("a", { href: it.url, target: "_blank", rel: "noopener", text: it.title });
+    var inner = el("div", { cls: "in" }, [meta, el("h3", {}, [a])]);
+    if (it.ai_summary) {
+      inner.appendChild(el("p", { cls: "ai" }, [el("span", { cls: "tag", text: it.ai_title_only ? "AI 解读 · 仅据标题" : "AI 解读" }), it.ai_summary]));
+    } else if (it.summary && it.level !== "背景") {
+      inner.appendChild(el("p", { cls: "snip", text: it.summary.length > 160 ? it.summary.slice(0, 160) + "……" : it.summary }));
+    }
+    if (it.tags && it.tags.length) inner.appendChild(el("div", { cls: "chips" }, it.tags.map(function (t) { return el("span", { cls: "chip", text: t }); })));
+    return el("article", { cls: "card", "data-lv": it.level }, [el("div", { cls: "bar" }), inner]);
+  }
+  function filtered() {
+    var since = F.range === "all" ? "" : daysAgo(+F.range);
+    return items.filter(function (i) {
+      if (i.date < since) return false;
+      if (F.lv !== "全部" && i.level !== F.lv) return false;
+      if (F.q) { var t = i.title + (i.summary || "") + (i.ai_summary || "") + (i.doc_no || ""); if (t.indexOf(F.q) < 0) return false; }
+      return true;
+    });
+  }
+  function renderFeed() {
+    var list = filtered(), feed = $("#feed");
+    feed.textContent = "";
+    if (!list.length) feed.appendChild(el("div", { cls: "empty", text: "这个范围里没有文件。换个时间范围试试。" }));
+    list.slice(0, F.shown).forEach(function (it) { feed.appendChild(card(it)); });
+    $("#count").textContent = list.length + " 条";
+    $("#more").hidden = list.length <= F.shown;
+  }
+  function seg(id, key) {
+    var box = $(id);
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      box.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      F[key] = b.dataset.v; F.shown = 30; renderFeed();
+    });
+  }
+  seg("#f-range", "range"); seg("#f-lv", "lv");
+  $("#f-q").addEventListener("input", function (e) { F.q = e.target.value.trim(); F.shown = 30; renderFeed(); });
+  $("#more").addEventListener("click", function () { F.shown += 30; renderFeed(); });
+  if (!items.some(function (i) { return i.date >= d30; })) {
+    F.range = "90"; $("#f-range").querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x.dataset.v === "90" ? "true" : "false"); });
+  }
+  renderFeed();
+
+  /* ---------- 图表（纯 SVG） ---------- */
+  function niceMax(v) { if (v <= 5) return 5; var p = Math.pow(10, Math.floor(Math.log10(v))), n = v / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
+  function fmt(n) { return n >= 10000 ? (n / 1000).toFixed(0) + "K" : n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n); }
+  function roundTop(x, y, w, h, r) { // 顶端 4px 圆角，底端方角
+    r = Math.min(r, w / 2, h);
+    return "M" + x + "," + (y + h) + "V" + (y + r) + "Q" + x + "," + y + " " + (x + r) + "," + y + "H" + (x + w - r) + "Q" + (x + w) + "," + y + " " + (x + w) + "," + (y + r) + "V" + (y + h) + "Z";
+  }
+  function frame(host, H) {
+    host.textContent = "";
+    var W = Math.max(280, host.clientWidth || 520);
+    var svg = sv("svg", { viewBox: "0 0 " + W + " " + H, role: "img" });
+    host.appendChild(svg);
+    return { svg: svg, W: W, H: H };
+  }
+  function yAxis(f, M, max, steps) {
+    if (max / steps !== Math.floor(max / steps)) steps = max % 5 === 0 ? 5 : max % 2 === 0 ? 2 : 1; // 计数只用整数刻度
+    for (var i = 0; i <= steps; i++) {
+      var v = max / steps * i, y = f.H - M.b - (f.H - M.t - M.b) * i / steps;
+      f.svg.appendChild(sv("line", { "class": i ? "gridl" : "axisl", x1: M.l, x2: f.W - M.r, y1: y, y2: y }));
+      var t = sv("text", { "class": "tick", x: M.l - 6, y: y + 4, "text-anchor": "end" }); t.textContent = fmt(v); f.svg.appendChild(t);
+    }
+  }
+  /* 单系列柱状图。data: [{label, value, partial, tipLabel}] */
+  function columns(host, data, opt) {
+    var f = frame(host, opt.h || 220), M = { t: 18, r: 8, b: 26, l: 36 };
+    var max = niceMax(Math.max.apply(null, data.map(function (d) { return d.value; }).concat([1])));
+    yAxis(f, M, max, 4);
+    var bw = (f.W - M.l - M.r) / data.length, w = Math.min(24, bw * 0.62);
+    var every = Math.ceil(data.length / Math.floor((f.W - M.l - M.r) / 44));
+    var maxI = 0; data.forEach(function (d, i) { if (d.value > data[maxI].value) maxI = i; });
+    data.forEach(function (d, i) {
+      var x = M.l + bw * i + (bw - w) / 2, h = (f.H - M.t - M.b) * d.value / max, y = f.H - M.b - h;
+      var g = sv("g", { "class": "mark", tabindex: "0" });
+      if (h > 0) {
+        var p = sv("path", { d: roundTop(x, y, w, Math.max(h, 1), 4), fill: "var(" + (opt.color || "--s-img") + ")" });
+        if (d.partial) { p.setAttribute("fill", "url(#hatch-" + host.id + ")"); p.setAttribute("stroke", "var(" + (opt.color || "--s-img") + ")"); p.setAttribute("stroke-width", "1"); }
+        g.appendChild(p);
+      }
+      var hit = sv("rect", { "class": "hit", x: M.l + bw * i, y: M.t, width: bw, height: f.H - M.t - M.b });
+      g.appendChild(hit);
+      var rows = [[fmt(d.value) + (opt.unit || ""), "tv"], [(d.tipLabel || d.label) + (d.partial ? "（不完整）" : ""), "tl"]];
+      g.addEventListener("pointermove", function (e) { tip.show(e, rows); });
+      g.addEventListener("pointerleave", tip.hide);
+      g.addEventListener("focus", function () { var b = hit.getBoundingClientRect(); tip.show({ clientX: b.left + b.width / 2, clientY: b.top }, rows); });
+      g.addEventListener("blur", tip.hide);
+      f.svg.appendChild(g);
+      if (i % every === 0 || i === data.length - 1) {
+        var t = sv("text", { "class": "tick", x: x + w / 2, y: f.H - M.b + 16, "text-anchor": "middle" }); t.textContent = d.label; f.svg.appendChild(t);
+      }
+      if (i === maxI || i === data.length - 1) {
+        var v = sv("text", { "class": "vlabel", x: x + w / 2, y: y - 5, "text-anchor": "middle" }); v.textContent = fmt(d.value); f.svg.appendChild(v);
+      }
+    });
+    var defs = sv("defs"), pat = sv("pattern", { id: "hatch-" + host.id, width: 5, height: 5, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+    pat.appendChild(sv("rect", { width: 2, height: 5, fill: "var(" + (opt.color || "--s-img") + ")" }));
+    defs.appendChild(pat); f.svg.insertBefore(defs, f.svg.firstChild);
+  }
+  /* 堆叠柱状图。series: [{name, colorVar, values[]}]，labels[] */
+  function stacked(host, labels, series, opt) {
+    var f = frame(host, opt.h || 220), M = { t: 14, r: 8, b: 26, l: 30 };
+    var totals = labels.map(function (_, i) { return series.reduce(function (s, x) { return s + x.values[i]; }, 0); });
+    var max = niceMax(Math.max.apply(null, totals.concat([1])));
+    yAxis(f, M, max, 4);
+    var bw = (f.W - M.l - M.r) / labels.length, w = Math.min(24, bw * 0.62), ph = f.H - M.t - M.b;
+    labels.forEach(function (lab, i) {
+      var x = M.l + bw * i + (bw - w) / 2, y = f.H - M.b, g = sv("g", { "class": "mark", tabindex: "0" });
+      var segs = series.filter(function (s) { return s.values[i] > 0; });
+      segs.forEach(function (s, k) {
+        var h = ph * s.values[i] / max, top = k === segs.length - 1;
+        var hh = top ? h : Math.max(h - 2, 1);   // 段与段之间留 2px 底色缝
+        y -= h;
+        g.appendChild(top ? sv("path", { d: roundTop(x, y, w, h, 4), fill: "var(" + s.colorVar + ")" })
+          : sv("rect", { x: x, y: y + (h - hh), width: w, height: hh, fill: "var(" + s.colorVar + ")" }));
+      });
+      var hit = sv("rect", { "class": "hit", x: M.l + bw * i, y: M.t, width: bw, height: ph }); g.appendChild(hit);
+      var rows = [[lab + " · 共 " + totals[i] + " 条", "tl"]].concat(series.map(function (s) { return { key: "var(" + s.colorVar + ")", v: String(s.values[i]), l: s.name }; }));
+      g.addEventListener("pointermove", function (e) { tip.show(e, rows); });
+      g.addEventListener("pointerleave", tip.hide);
+      g.addEventListener("focus", function () { var b = hit.getBoundingClientRect(); tip.show({ clientX: b.left + b.width / 2, clientY: b.top }, rows); });
+      g.addEventListener("blur", tip.hide);
+      f.svg.appendChild(g);
+      var t = sv("text", { "class": "tick", x: x + w / 2, y: f.H - M.b + 16, "text-anchor": "middle" }); t.textContent = lab.slice(2); f.svg.appendChild(t);
+    });
+  }
+  /* 横向条形图。data: [{label, value}] */
+  function hbars(host, data, opt) {
+    var rowH = 30, f = frame(host, data.length * rowH + 10), M = { l: 104, r: 40 };
+    var max = Math.max.apply(null, data.map(function (d) { return d.value; }).concat([1]));
+    data.forEach(function (d, i) {
+      var y = 4 + i * rowH, w = (f.W - M.l - M.r) * d.value / max, g = sv("g", { "class": "mark", tabindex: "0" });
+      var t = sv("text", { "class": "tick", x: M.l - 8, y: y + 15, "text-anchor": "end" }); t.textContent = d.label; t.style.fontFamily = "var(--sans)"; t.style.fontSize = "12.5px"; g.appendChild(t);
+      if (w > 0) g.appendChild(sv("path", { d: "M" + M.l + "," + y + "H" + (M.l + w - 4) + "Q" + (M.l + w) + "," + y + " " + (M.l + w) + "," + (y + 4) + "V" + (y + 16) + "Q" + (M.l + w) + "," + (y + 20) + " " + (M.l + w - 4) + "," + (y + 20) + "H" + M.l + "Z", fill: "var(" + (opt.color || "--s-img") + ")" }));
+      var v = sv("text", { "class": "vlabel", x: M.l + w + 6, y: y + 15 }); v.textContent = d.value; g.appendChild(v);
+      var hit = sv("rect", { "class": "hit", x: 0, y: y - 4, width: f.W, height: rowH }); g.appendChild(hit);
+      var rows = [[d.value + " 条", "tv"], [d.label, "tl"]];
+      g.addEventListener("pointermove", function (e) { tip.show(e, rows); });
+      g.addEventListener("pointerleave", tip.hide);
+      f.svg.appendChild(g);
+    });
+  }
+  function table(host, head, rows) {
+    host.textContent = "";
+    var t = el("table", { cls: "data" }), tr = el("tr");
+    head.forEach(function (h) { tr.appendChild(el("th", { text: h })); }); t.appendChild(tr);
+    rows.forEach(function (r) { var row = el("tr"); r.forEach(function (c, k) { row.appendChild(el("td", { cls: k ? "n" : "", text: String(c) })); }); t.appendChild(row); });
+    host.appendChild(t);
+  }
+
+  /* 图表数据 */
+  var trendKeys = Object.keys(MR.trends || {});
+  var tsel = $("#trend-q");
+  trendKeys.forEach(function (k) { tsel.appendChild(el("option", { value: k, text: k })); });
+  var regRe = /批准注册(\d+)个医疗器械产品的公告（(\d{4})年(\d{1,2})月）/;
+  var reg = {};
+  MR.allItems.forEach(function (i) { var m = regRe.exec(i.title); if (m) reg[m[2] + "-" + ("0" + m[3]).slice(-2)] = +m[1]; });
+  var regKeys = Object.keys(reg).sort();
+
+  var tableMode = {};
+  function chartTrend() {
+    var host = $("#c-trend"), q = tsel.value, s = (MR.trends || {})[q] || {};
+    var ys = Object.keys(s).map(Number).filter(function (y) { return y >= 2008; }).sort();
+    var thisYear = +MR.today.slice(0, 4);
+    var data = ys.map(function (y) { return { label: String(y), value: s[y], partial: y === thisYear, tipLabel: y + " 年" }; });
+    if (!data.length) { host.textContent = "还没有历年数据（联网运行一次雷达后出现）。"; return; }
+    if (tableMode.trend) return table(host, ["年份", "文件数"], data.map(function (d) { return [d.label + (d.partial ? "（截至 " + MR.today.slice(5) + "）" : ""), d.value]; }));
+    columns(host, data, { h: 240, unit: " 份" });
+  }
+  function chartReg() {
+    var host = $("#c-reg");
+    var data = regKeys.map(function (k) { return { label: k.slice(2).replace("-", "."), value: reg[k], tipLabel: k.replace("-", " 年 ") + " 月" }; });
+    if (!data.length) { host.textContent = "导入药监局“医疗器械公告通告”页面后，这里会出现每月批准注册的产品数。"; return; }
+    if (tableMode.reg) return table(host, ["月份", "批准注册产品数"], data.map(function (d) { return [d.tipLabel, d.value]; }));
+    columns(host, data, { h: 220, unit: " 个", color: "--s-dev" });
+    $("#reg-note").textContent = data.length < 6 ? "目前只有 " + data.length + " 个月的数据。导入药监局公告列表的更多页，曲线会变长。" : "";
+  }
+  function chartTags() {
+    var host = $("#c-tags"), cnt = {};
+    items.forEach(function (i) { (i.tags || []).forEach(function (t) { cnt[t] = (cnt[t] || 0) + 1; }); });
+    var data = Object.keys(cnt).map(function (k) { return { label: k, value: cnt[k] }; }).sort(function (a, b) { return b.value - a.value; });
+    if (!data.length) { host.textContent = "暂无数据。"; return; }
+    if (tableMode.tags) return table(host, ["主题", "条数"], data.map(function (d) { return [d.label, d.value]; }));
+    hbars(host, data, {});
+  }
+  function chartMonthly() {
+    var host = $("#c-month"), months = [], d = new Date(MR.today + "T00:00:00");
+    for (var k = 11; k >= 0; k--) { var x = new Date(d.getFullYear(), d.getMonth() - k, 1); months.push(x.getFullYear() + "-" + ("0" + (x.getMonth() + 1)).slice(-2)); }
+    var series = LEVELS.map(function (lv) {
+      return { name: lv, colorVar: LV_VAR[lv], values: months.map(function (m) { return MR.allItems.filter(function (i) { return i.level === lv && i.date.slice(0, 7) === m; }).length; }) };
+    });
+    if (tableMode.month) return table(host, ["月份"].concat(LEVELS), months.map(function (m, i) { return [m].concat(series.map(function (s) { return s.values[i]; })); }));
+    stacked(host, months, series, { h: 220 });
+  }
+  function renderCharts() { chartTrend(); chartReg(); chartTags(); chartMonthly(); }
+  tsel.addEventListener("change", chartTrend);
+  document.querySelectorAll("[data-table]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var k = b.dataset.table; tableMode[k] = !tableMode[k];
+      b.textContent = tableMode[k] ? "图表" : "表格"; b.setAttribute("aria-pressed", tableMode[k]); renderCharts();
+    });
+  });
+  var rz; addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(renderCharts, 150); });
+  renderCharts();
+
+  /* ---------- 档案 ---------- */
+  ["weekly", "monthly"].forEach(function (kind) {
+    var box = $("#arch-" + kind);
+    (MR.reports[kind] || []).forEach(function (r) {
+      box.appendChild(el("a", { href: kind + "/" + r.label + ".html" }, [el("b", { text: r.label }), el("small", { text: r.count + " 条" })]));
+    });
+  });
+
+  /* ---------- AI 问答 ---------- */
+  var drawer = $("#drawer"), modal = $("#keymodal"), chat = $("#chat"), history = [];
+  function openDrawer() { drawer.classList.add("open"); drawer.setAttribute("aria-hidden", "false"); if (!store.get("mr_key")) openModal(); else $("#ask").focus(); }
+  function closeDrawer() { drawer.classList.remove("open"); drawer.setAttribute("aria-hidden", "true"); }
+  function openModal() { modal.classList.add("open"); $("#keyinput").value = ""; $("#keyinput").focus(); }
+  function closeModal() { modal.classList.remove("open"); }
+  document.querySelectorAll("[data-open-ai]").forEach(function (b) { b.addEventListener("click", openDrawer); });
+  $("#close-ai").addEventListener("click", closeDrawer);
+  $("#key-cancel").addEventListener("click", closeModal);
+  $("#key-save").addEventListener("click", function () {
+    var k = $("#keyinput").value.trim();
+    if (!/^sk-[A-Za-z0-9]{10,}/.test(k)) { $("#key-err").textContent = "看起来不像 DeepSeek 的 key（应以 sk- 开头）。"; return; }
+    store.set("mr_key", k); $("#key-err").textContent = ""; closeModal(); updateKeybar(); $("#ask").focus();
+  });
+  $("#key-clear").addEventListener("click", function () { store.del("mr_key"); updateKeybar(); openModal(); });
+  $("#key-change").addEventListener("click", openModal);
+  function updateKeybar() { $("#keystate").textContent = store.get("mr_key") ? "已填 key（只存在这个浏览器里）" : "还没有填 key"; }
+  updateKeybar();
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { if (modal.classList.contains("open")) closeModal(); else closeDrawer(); } });
+
+  function grams(q) {
+    var out = [], latin = q.match(/[A-Za-z0-9]{2,}/g) || [];
+    var zh = q.replace(/[^一-龥]/g, "");
+    for (var i = 0; i < zh.length - 1; i++) out.push(zh.slice(i, i + 2));
+    var stop = /^(什么|一下|哪些|怎么|有没|没有|这个|那个|帮我|告诉|整理|最近|本月|本周|相关|关于|的|了)$/;
+    return out.filter(function (g) { return !stop.test(g); }).concat(latin.map(function (s) { return s.toUpperCase(); }));
+  }
+  function retrieve(q) {
+    var pool = items, now = MR.today;
+    if (/本月|这个月/.test(q)) pool = items.filter(function (i) { return i.date.slice(0, 7) === now.slice(0, 7); });
+    else if (/本周|这周|这一周/.test(q)) pool = items.filter(function (i) { return i.date >= daysAgo(7); });
+    else if (/最近|近期|新出/.test(q)) pool = items.filter(function (i) { return i.date >= daysAgo(45); });
+    if (/影像|CT|MR|磁共振|超声|放射|DR|DSA/i.test(q)) pool = pool.filter(function (i) { return i.level !== "背景"; });
+    var gs = grams(q);
+    var scored = pool.map(function (i) {
+      var t = i.title.toUpperCase(), b = ((i.summary || "") + (i.ai_summary || "")).toUpperCase(), s = 0;
+      gs.forEach(function (g) { if (t.indexOf(g) > -1) s += 3; if (b.indexOf(g) > -1) s += 1; });
+      if (i.level === "影像设备") s += 0.5;
+      return { i: i, s: s };
+    }).sort(function (a, b) { return b.s - a.s || (a.i.date < b.i.date ? 1 : -1); });
+    var hits = scored.filter(function (x) { return x.s >= 1; });
+    return (hits.length >= 3 ? hits : scored).slice(0, 24).map(function (x) { return x.i; });
+  }
+  var SYS = "你是“MedReg Radar”的法规助手，帮助医疗器械（尤其医学影像设备）从业者理解政策和法规动态。" +
+    "只能根据用户消息里给出的【资料】回答，资料里没有的内容就明确说“资料里没有”，不要编造文件、条款或数字。" +
+    "每一句引用资料的话，在句末用 [编号] 标出来源，例如 [3]。回答用中文，先给结论，再分点，简洁。" +
+    "最后一行提醒：以官方原文为准。";
+  function context(list) {
+    return list.map(function (it, k) {
+      return "[" + (k + 1) + "] " + it.title + "（" + it.date + "，" + it.source + (it.doc_no ? "，" + it.doc_no : "") + "，分级：" + it.level + "）" +
+        (it.ai_summary ? "\n解读：" + it.ai_summary : "") + (it.summary ? "\n摘要：" + it.summary.slice(0, 220) : "");
+    }).join("\n\n");
+  }
+  function addMsg(who, text) {
+    var txt = el("div", { cls: "txt", text: text || "" });
+    var m = el("div", { cls: "msg " + who }, [el("div", { cls: "who", text: who === "user" ? "你" : "MEDREG · AI" }), txt]);
+    chat.appendChild(m); chat.scrollTop = chat.scrollHeight;
+    return { m: m, txt: txt };
+  }
+  function finalize(node, text, refs) {
+    node.txt.textContent = "";
+    var used = {}, re = /\[(\d{1,2})\]/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      node.txt.appendChild(document.createTextNode(text.slice(last, m.index)));
+      var n = +m[1], it = refs[n - 1];
+      if (it) { used[n] = it; node.txt.appendChild(el("a", { cls: "cite", href: it.url, target: "_blank", rel: "noopener", title: it.title, text: "[" + n + "]" })); }
+      else node.txt.appendChild(document.createTextNode(m[0]));
+      last = re.lastIndex;
+    }
+    node.txt.appendChild(document.createTextNode(text.slice(last)));
+    var ks = Object.keys(used);
+    if (ks.length) {
+      var box = el("div", { cls: "refs" }, [el("div", { text: "出处" })]);
+      ks.forEach(function (k) { box.appendChild(el("div", {}, ["[" + k + "] ", el("a", { href: used[k].url, target: "_blank", rel: "noopener", text: used[k].title })])); });
+      node.m.appendChild(box);
+    }
+  }
+  async function ask(q) {
+    var key = store.get("mr_key");
+    if (!key) { openModal(); return; }
+    addMsg("user", q);
+    var refs = retrieve(q), node = addMsg("ai", "正在翻资料……");
+    var msgs = [{ role: "system", content: SYS }].concat(history.slice(-4)).concat([{ role: "user", content: "【资料】\n" + context(refs) + "\n\n【问题】" + q }]);
+    $("#send").disabled = true;
+    var text = "";
+    try {
+      var res = await fetch(MR.ai.base_url.replace(/\/$/, "") + "/chat/completions", {
+        method: "POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
+        body: JSON.stringify({ model: MR.ai.model, messages: msgs, stream: true, temperature: 0.3 })
+      });
+      if (!res.ok) {
+        var why = res.status === 401 ? "key 不对或已失效，点下方“换一个”重新填。" : res.status === 402 ? "账户余额不足，去 DeepSeek 后台充值后再试。" :
+          res.status === 429 ? "请求太频繁，等一会儿再试。" : "请求失败（" + res.status + "）。";
+        node.txt.textContent = why; return;
+      }
+      var reader = res.body.getReader(), dec = new TextDecoder(), buf = "";
+      node.txt.textContent = "";
+      while (true) {
+        var r = await reader.read(); if (r.done) break;
+        buf += dec.decode(r.value, { stream: true });
+        var lines = buf.split("\n"); buf = lines.pop();
+        lines.forEach(function (ln) {
+          ln = ln.trim(); if (ln.indexOf("data:") !== 0) return;
+          var p = ln.slice(5).trim(); if (p === "[DONE]") return;
+          try { var d = JSON.parse(p).choices[0].delta.content; if (d) { text += d; node.txt.textContent = text; chat.scrollTop = chat.scrollHeight; } } catch (e) {}
+        });
+      }
+      finalize(node, text, refs);
+      history.push({ role: "user", content: q }, { role: "assistant", content: text });
+    } catch (e) {
+      node.txt.textContent = "连不上 AI 服务。检查一下网络；如果在学校或公司网络里，可能被拦了。";
+    } finally { $("#send").disabled = false; }
+  }
+  $("#askform").addEventListener("submit", function (e) { e.preventDefault(); var q = $("#ask").value.trim(); if (!q) return; $("#ask").value = ""; ask(q); });
+  $("#ask").addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); $("#askform").requestSubmit(); } });
+  document.querySelectorAll("#presets button").forEach(function (b) { b.addEventListener("click", function () { ask(b.textContent); }); });
+})();
 </script>
-</body></html>
+</body>
+</html>

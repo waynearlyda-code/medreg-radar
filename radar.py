@@ -10,7 +10,7 @@ import json
 import os
 import sys
 
-from medreg import report, site, source_govcn, source_inbox
+from medreg import ai, report, site, source_govcn, source_inbox
 from medreg.classify import classify
 from medreg.store import Store
 
@@ -21,6 +21,7 @@ def main():
     ap = argparse.ArgumentParser(description="MedReg Radar")
     ap.add_argument("--offline", action="store_true", help="不联网抓取")
     ap.add_argument("--days", type=int, help="报告覆盖最近多少天（默认见 config.json）")
+    ap.add_argument("--no-ai", action="store_true", help="不写 AI 解读")
     args = ap.parse_args()
 
     with open(os.path.join(ROOT, "config.json"), encoding="utf-8") as f:
@@ -30,9 +31,19 @@ def main():
 
     store = Store(os.path.join(ROOT, "data", "items.json"))
     raw = []
+    trends_path = os.path.join(ROOT, "data", "trends.json")
+    trends = {}
+    if os.path.exists(trends_path):
+        with open(trends_path, encoding="utf-8") as f:
+            trends = json.load(f)
     if not args.offline:
         print("抓取 中国政府网·政策文件库 ...")
-        raw += source_govcn.fetch(cfg)
+        got, t = source_govcn.fetch(cfg)
+        raw += got
+        if t:
+            trends = {"updated": today.isoformat(), "source": "中国政府网·政策文件库（标题或正文含该词的文件数）", "series": t}
+            with open(trends_path, "w", encoding="utf-8") as f:
+                json.dump(trends, f, ensure_ascii=False, indent=1)
     print("读取 inbox/ 里手动保存的网页 ...")
     raw += source_inbox.read_inbox(os.path.join(ROOT, "inbox"))
 
@@ -45,11 +56,14 @@ def main():
     for it in list(store.items.values()):
         if classify(it, cfg) is None:
             del store.items[it["url"]]
-    store.save()
-
     items = [i for i in store.all() if i["date"] >= first.isoformat()]
+    if not args.no_ai:
+        print("AI 解读 ...")
+        ai.annotate(items, ROOT, cfg)
+    store.save()
     reports = report.write_all(items, os.path.join(ROOT, "reports"), first, today)
-    site.build(items, reports, os.path.join(ROOT, "docs"), today)
+    site.build(items, reports, os.path.join(ROOT, "docs"), today, trends=trends.get("series", {}),
+               all_items=store.all(), ai_cfg=cfg["ai"])
 
     img = sum(1 for i in new if i["level"] == "影像设备")
     print("\n完成：本次新增 %d 条（影像设备 %d 条）。库里共 %d 条。" % (len(new), img, len(store.items)))
