@@ -10,7 +10,7 @@ import json
 import os
 import sys
 
-from medreg import ai, report, site, source_govcn, source_inbox
+from medreg import report, site, source_govcn, source_inbox
 from medreg.classify import classify
 from medreg.store import Store
 
@@ -21,7 +21,6 @@ def main():
     ap = argparse.ArgumentParser(description="MedReg Radar")
     ap.add_argument("--offline", action="store_true", help="不联网抓取")
     ap.add_argument("--days", type=int, help="报告覆盖最近多少天（默认见 config.json）")
-    ap.add_argument("--no-ai", action="store_true", help="不写 AI 解读")
     args = ap.parse_args()
 
     with open(os.path.join(ROOT, "config.json"), encoding="utf-8") as f:
@@ -57,13 +56,10 @@ def main():
         if classify(it, cfg) is None:
             del store.items[it["url"]]
     items = [i for i in store.all() if i["date"] >= first.isoformat()]
-    if not args.no_ai:
-        print("AI 解读 ...")
-        ai.annotate(items, ROOT, cfg)
     store.save()
     reports = report.write_all(items, os.path.join(ROOT, "reports"), first, today)
-    site.build(items, reports, os.path.join(ROOT, "docs"), today, trends=trends.get("series", {}),
-               all_items=store.all(), ai_cfg=cfg["ai"])
+    site.build(store.all(), reports, os.path.join(ROOT, "docs"), today, trends=trends.get("series", {}),
+               all_items=store.all())
 
     img = sum(1 for i in new if i["level"] == "影像设备")
     print("\n完成：本次新增 %d 条（影像设备 %d 条）。库里共 %d 条。" % (len(new), img, len(store.items)))

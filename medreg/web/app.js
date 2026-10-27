@@ -118,9 +118,7 @@
     if (it.doc_no) meta.appendChild(el("span", { text: it.doc_no }));
     var a = el("a", { href: it.url, target: "_blank", rel: "noopener", text: it.title });
     var inner = el("div", { cls: "in" }, [meta, el("h3", {}, [a])]);
-    if (it.ai_summary) {
-      inner.appendChild(el("p", { cls: "ai" }, [el("span", { cls: "tag", text: it.ai_title_only ? "AI 解读 · 仅据标题" : "AI 解读" }), it.ai_summary]));
-    } else if (it.summary && it.level !== "背景") {
+    if (it.summary && it.level !== "背景") {
       inner.appendChild(el("p", { cls: "snip", text: it.summary.length > 160 ? it.summary.slice(0, 160) + "……" : it.summary }));
     }
     if (it.tags && it.tags.length) inner.appendChild(el("div", { cls: "chips" }, it.tags.map(function (t) { return el("span", { cls: "chip", text: t }); })));
@@ -131,7 +129,7 @@
     return items.filter(function (i) {
       if (i.date < since) return false;
       if (F.lv !== "全部" && i.level !== F.lv) return false;
-      if (F.q) { var t = i.title + (i.summary || "") + (i.ai_summary || "") + (i.doc_no || ""); if (t.indexOf(F.q) < 0) return false; }
+      if (F.q) { var t = i.title + (i.summary || "") + (i.doc_no || ""); if (t.indexOf(F.q) < 0) return false; }
       return true;
     });
   }
@@ -330,120 +328,81 @@
     });
   });
 
-  /* ---------- AI 问答 ---------- */
-  var drawer = $("#drawer"), modal = $("#keymodal"), chat = $("#chat"), history = [];
-  function openDrawer() { drawer.classList.add("open"); drawer.setAttribute("aria-hidden", "false"); if (!store.get("mr_key")) openModal(); else $("#ask").focus(); }
-  function closeDrawer() { drawer.classList.remove("open"); drawer.setAttribute("aria-hidden", "true"); }
-  function openModal() { modal.classList.add("open"); $("#keyinput").value = ""; $("#keyinput").focus(); }
-  function closeModal() { modal.classList.remove("open"); }
-  document.querySelectorAll("[data-open-ai]").forEach(function (b) { b.addEventListener("click", openDrawer); });
-  $("#close-ai").addEventListener("click", closeDrawer);
-  $("#key-cancel").addEventListener("click", closeModal);
-  $("#key-save").addEventListener("click", function () {
-    var k = $("#keyinput").value.trim();
-    if (!/^sk-[A-Za-z0-9]{10,}/.test(k)) { $("#key-err").textContent = "看起来不像 DeepSeek 的 key（应以 sk- 开头）。"; return; }
-    store.set("mr_key", k); $("#key-err").textContent = ""; closeModal(); updateKeybar(); $("#ask").focus();
+  /* ---------- 导出：交给用户自己的 AI ---------- */
+  var TASKS = [
+    { id: "raw", name: "只要资料，不加指令", prompt: "" },
+    { id: "sum", name: "总结这段时间的主要变化", prompt: "请阅读下面的资料，分“影像设备”“医疗器械”两部分，概括这段时间医疗器械法规与政策的主要变化，每部分不超过 5 点，并指出最值得关注的 1–2 件事。" },
+    { id: "eng", name: "对医院设备科工程师有什么影响", prompt: "我是医院设备科的工程师。请根据下面的资料，说明这些文件对我的日常工作（采购、验收、维护、质控、报废）可能有什么影响，列出需要注意或需要行动的事项，按紧急程度排序。" },
+    { id: "ent", name: "对医疗器械企业有什么影响", prompt: "请从医疗器械企业（注册、生产质量、售后服务、销售）的角度，分析下面的资料带来的影响和机会，给出具体建议。" },
+    { id: "rep", name: "写一份调研报告大纲", prompt: "请基于下面的资料，写一份关于近期医疗器械（重点是医学影像设备）法规与政策的调研报告大纲：背景、主要政策梳理、趋势判断、对相关方的建议。资料不足的地方请标注“需进一步调研”。" },
+    { id: "exam", name: "出几道面试 / 考试题", prompt: "请根据下面的资料，出 5 道适合医疗器械相关专业学生面试或考试的问题，每题附答案要点和对应的资料编号。" },
+    { id: "plain", name: "用大白话讲给外行听", prompt: "请用通俗易懂的话，把下面资料里最重要的几件事讲给一个不懂医疗器械行业的人听，避免专业术语，每件事两三句话。" }
+  ];
+  var RULES = "使用说明：以下资料来自 MedReg Radar 从公开渠道整理的政府文件（标题、日期、来源、摘要片段与原文链接），非官方发布。请只根据这些资料回答；引用时标注资料编号，如 [3]；资料中没有的内容请说明“资料中未提及”，不要编造；最后提醒以官方原文为准。";
+  var tsk = $("#ex-task");
+  TASKS.forEach(function (t) { tsk.appendChild(el("option", { value: t.id, text: t.name })); });
+  tsk.value = "sum";
+  function scopeText() {
+    var parts = [F.range === "all" ? "全部时间" : "近 " + F.range + " 天", F.lv === "全部" ? "全部分级" : F.lv];
+    if (F.q) parts.push("关键词“" + F.q + "”");
+    return parts.join(" · ");
+  }
+  function updateScope() { $("#ex-scope").textContent = "将导出 " + filtered().length + " 条（" + scopeText() + "）"; }
+  function toMarkdown() {
+    var list = filtered(), task = TASKS.filter(function (t) { return t.id === tsk.value; })[0];
+    var out = [];
+    if (task.prompt) out.push(task.prompt, "");
+    out.push("# 资料：MedReg Radar 导出", "", "范围：" + scopeText() + "；共 " + list.length + " 条；数据日期 " + MR.today + "。", "", RULES, "");
+    list.forEach(function (it, k) {
+      out.push("[" + (k + 1) + "] " + it.title);
+      out.push("- 日期：" + it.date + "｜来源：" + it.source + (it.doc_no ? "｜文号：" + it.doc_no : "") + "｜分级：" + it.level + (it.tags && it.tags.length ? "｜主题：" + it.tags.join("、") : ""));
+      out.push("- 原文：" + it.url);
+      if (it.summary) out.push("- 摘要：" + it.summary);
+      out.push("");
+    });
+    return { text: out.join("\n"), n: list.length };
+  }
+  function toCSV() {
+    var head = ["编号", "日期", "分级", "标题", "来源", "文号", "主题", "原文链接", "摘要"];
+    var q = function (v) { v = String(v == null ? "" : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+    var rows = [head.join(",")];
+    filtered().forEach(function (it, k) {
+      rows.push([k + 1, it.date, it.level, it.title, it.source, it.doc_no || "", (it.tags || []).join("、"), it.url, it.summary || ""].map(q).join(","));
+    });
+    return "\ufeff" + rows.join("\r\n");   // 带 BOM，Excel 打开不乱码
+  }
+  function fname(ext) { return "medreg-radar-" + MR.today + "." + ext; }
+  function flash(msg) { var s = $("#ex-msg"); s.textContent = msg; clearTimeout(flash.t); flash.t = setTimeout(function () { s.textContent = ""; }, 4000); }
+  var native = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform() ? window.Capacitor.Plugins : null;
+  async function nativeShare(name, data, title) {   // 安卓安装包里：先存成文件，再调系统分享
+    var w = await native.Filesystem.writeFile({ path: name, data: data, directory: "CACHE", encoding: "utf8" });
+    await native.Share.share({ title: title, url: w.uri, dialogTitle: title });
+  }
+  $("#ex-copy").addEventListener("click", async function () {
+    var md = toMarkdown();
+    try { await navigator.clipboard.writeText(md.text); }
+    catch (e) { var ta = el("textarea"); ta.value = md.text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
+    flash("已复制 " + md.n + " 条。打开豆包、DeepSeek、Kimi 等，粘贴发送即可。");
   });
-  $("#key-clear").addEventListener("click", function () { store.del("mr_key"); updateKeybar(); openModal(); });
-  $("#key-change").addEventListener("click", openModal);
-  function updateKeybar() { $("#keystate").textContent = store.get("mr_key") ? "已填 key（只存在这个浏览器里）" : "还没有填 key"; }
-  updateKeybar();
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { if (modal.classList.contains("open")) closeModal(); else closeDrawer(); } });
-
-  function grams(q) {
-    var out = [], latin = q.match(/[A-Za-z0-9]{2,}/g) || [];
-    var zh = q.replace(/[^一-龥]/g, "");
-    for (var i = 0; i < zh.length - 1; i++) out.push(zh.slice(i, i + 2));
-    var stop = /^(什么|一下|哪些|怎么|有没|没有|这个|那个|帮我|告诉|整理|最近|本月|本周|相关|关于|的|了)$/;
-    return out.filter(function (g) { return !stop.test(g); }).concat(latin.map(function (s) { return s.toUpperCase(); }));
-  }
-  function retrieve(q) {
-    var pool = items, now = MR.today;
-    if (/本月|这个月/.test(q)) pool = items.filter(function (i) { return i.date.slice(0, 7) === now.slice(0, 7); });
-    else if (/本周|这周|这一周/.test(q)) pool = items.filter(function (i) { return i.date >= daysAgo(7); });
-    else if (/最近|近期|新出/.test(q)) pool = items.filter(function (i) { return i.date >= daysAgo(45); });
-    if (/影像|CT|MR|磁共振|超声|放射|DR|DSA/i.test(q)) pool = pool.filter(function (i) { return i.level !== "背景"; });
-    var gs = grams(q);
-    var scored = pool.map(function (i) {
-      var t = i.title.toUpperCase(), b = ((i.summary || "") + (i.ai_summary || "")).toUpperCase(), s = 0;
-      gs.forEach(function (g) { if (t.indexOf(g) > -1) s += 3; if (b.indexOf(g) > -1) s += 1; });
-      if (i.level === "影像设备") s += 0.5;
-      return { i: i, s: s };
-    }).sort(function (a, b) { return b.s - a.s || (a.i.date < b.i.date ? 1 : -1); });
-    var hits = scored.filter(function (x) { return x.s >= 1; });
-    return (hits.length >= 3 ? hits : scored).slice(0, 24).map(function (x) { return x.i; });
-  }
-  var SYS = "你是“MedReg Radar”的法规助手，帮助医疗器械（尤其医学影像设备）从业者理解政策和法规动态。" +
-    "只能根据用户消息里给出的【资料】回答，资料里没有的内容就明确说“资料里没有”，不要编造文件、条款或数字。" +
-    "每一句引用资料的话，在句末用 [编号] 标出来源，例如 [3]。回答用中文，先给结论，再分点，简洁。" +
-    "最后一行提醒：以官方原文为准。";
-  function context(list) {
-    return list.map(function (it, k) {
-      return "[" + (k + 1) + "] " + it.title + "（" + it.date + "，" + it.source + (it.doc_no ? "，" + it.doc_no : "") + "，分级：" + it.level + "）" +
-        (it.ai_summary ? "\n解读：" + it.ai_summary : "") + (it.summary ? "\n摘要：" + it.summary.slice(0, 220) : "");
-    }).join("\n\n");
-  }
-  function addMsg(who, text) {
-    var txt = el("div", { cls: "txt", text: text || "" });
-    var m = el("div", { cls: "msg " + who }, [el("div", { cls: "who", text: who === "user" ? "你" : "MEDREG · AI" }), txt]);
-    chat.appendChild(m); chat.scrollTop = chat.scrollHeight;
-    return { m: m, txt: txt };
-  }
-  function finalize(node, text, refs) {
-    node.txt.textContent = "";
-    var used = {}, re = /\[(\d{1,2})\]/g, last = 0, m;
-    while ((m = re.exec(text))) {
-      node.txt.appendChild(document.createTextNode(text.slice(last, m.index)));
-      var n = +m[1], it = refs[n - 1];
-      if (it) { used[n] = it; node.txt.appendChild(el("a", { cls: "cite", href: it.url, target: "_blank", rel: "noopener", title: it.title, text: "[" + n + "]" })); }
-      else node.txt.appendChild(document.createTextNode(m[0]));
-      last = re.lastIndex;
-    }
-    node.txt.appendChild(document.createTextNode(text.slice(last)));
-    var ks = Object.keys(used);
-    if (ks.length) {
-      var box = el("div", { cls: "refs" }, [el("div", { text: "出处" })]);
-      ks.forEach(function (k) { box.appendChild(el("div", {}, ["[" + k + "] ", el("a", { href: used[k].url, target: "_blank", rel: "noopener", text: used[k].title })])); });
-      node.m.appendChild(box);
-    }
-  }
-  async function ask(q) {
-    var key = store.get("mr_key");
-    if (!key) { openModal(); return; }
-    addMsg("user", q);
-    var refs = retrieve(q), node = addMsg("ai", "正在翻资料……");
-    var msgs = [{ role: "system", content: SYS }].concat(history.slice(-4)).concat([{ role: "user", content: "【资料】\n" + context(refs) + "\n\n【问题】" + q }]);
-    $("#send").disabled = true;
-    var text = "";
+  $("#ex-share").addEventListener("click", async function () {
+    var md = toMarkdown();
     try {
-      var res = await fetch(MR.ai.base_url.replace(/\/$/, "") + "/chat/completions", {
-        method: "POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
-        body: JSON.stringify({ model: MR.ai.model, messages: msgs, stream: true, temperature: 0.3 })
-      });
-      if (!res.ok) {
-        var why = res.status === 401 ? "key 不对或已失效，点下方“换一个”重新填。" : res.status === 402 ? "账户余额不足，去 DeepSeek 后台充值后再试。" :
-          res.status === 429 ? "请求太频繁，等一会儿再试。" : "请求失败（" + res.status + "）。";
-        node.txt.textContent = why; return;
-      }
-      var reader = res.body.getReader(), dec = new TextDecoder(), buf = "";
-      node.txt.textContent = "";
-      while (true) {
-        var r = await reader.read(); if (r.done) break;
-        buf += dec.decode(r.value, { stream: true });
-        var lines = buf.split("\n"); buf = lines.pop();
-        lines.forEach(function (ln) {
-          ln = ln.trim(); if (ln.indexOf("data:") !== 0) return;
-          var p = ln.slice(5).trim(); if (p === "[DONE]") return;
-          try { var d = JSON.parse(p).choices[0].delta.content; if (d) { text += d; node.txt.textContent = text; chat.scrollTop = chat.scrollHeight; } } catch (e) {}
-        });
-      }
-      finalize(node, text, refs);
-      history.push({ role: "user", content: q }, { role: "assistant", content: text });
-    } catch (e) {
-      node.txt.textContent = "连不上 AI 服务。检查一下网络；如果在学校或公司网络里，可能被拦了。";
-    } finally { $("#send").disabled = false; }
+      if (native && native.Share) { await nativeShare(fname("md"), md.text, "MedReg Radar 导出"); return; }
+      var file = new File([md.text], fname("md"), { type: "text/markdown" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file], title: "MedReg Radar 导出" });
+      else await navigator.share({ title: "MedReg Radar 导出", text: md.text });
+    } catch (e) { if (e && e.name !== "AbortError") flash("这里不支持分享，换成“复制给 AI”吧。"); }
+  });
+  function download(name, text, type) {
+    if (native && native.Share) { nativeShare(name, text, "保存或发送 " + name).catch(function () {}); return; }
+    var a = el("a", { href: URL.createObjectURL(new Blob([text], { type: type })), download: name });
+    document.body.appendChild(a); a.click(); a.remove();
+    flash("已下载 " + name + "。");
   }
-  $("#askform").addEventListener("submit", function (e) { e.preventDefault(); var q = $("#ask").value.trim(); if (!q) return; $("#ask").value = ""; ask(q); });
-  $("#ask").addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); $("#askform").requestSubmit(); } });
-  document.querySelectorAll("#presets button").forEach(function (b) { b.addEventListener("click", function () { ask(b.textContent); }); });
+  $("#ex-md").addEventListener("click", function () { download(fname("md"), toMarkdown().text, "text/markdown;charset=utf-8"); });
+  $("#ex-csv").addEventListener("click", function () { download(fname("csv"), toCSV(), "text/csv;charset=utf-8"); });
+  if (!navigator.share && !native) $("#ex-share").hidden = true;
+  var _render = renderFeed;
+  renderFeed = function () { _render(); updateScope(); };
+  updateScope();
 })();

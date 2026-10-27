@@ -26,7 +26,7 @@ def _json_for_script(obj):
 
 
 def _slim(it):
-    keep = ("url", "title", "date", "source", "doc_no", "level", "tags", "summary", "ai_summary", "ai_title_only")
+    keep = ("url", "title", "date", "source", "doc_no", "level", "tags", "summary")
     return {k: it[k] for k in keep if it.get(k)}
 
 
@@ -34,10 +34,7 @@ def _card(it):
     meta = [it["level"], it["date"], it["source"]] + ([it["doc_no"]] if it.get("doc_no") else [])
     meta_html = "".join(('<span class="lv">%s</span>' if i == 0 else "<span>%s</span>") % _e(m) for i, m in enumerate(meta))
     body = ""
-    if it.get("ai_summary"):
-        body = '<p class="ai"><span class="tag">%s</span>%s</p>' % (
-            "AI 解读 · 仅据标题" if it.get("ai_title_only") else "AI 解读", _e(it["ai_summary"]))
-    elif it.get("summary") and it["level"] != "背景":
+    if it.get("summary") and it["level"] != "背景":
         s = it["summary"]
         body = '<p class="snip">%s</p>' % _e(s if len(s) <= 160 else s[:160] + "……")
     chips = "".join('<span class="chip">%s</span>' % _e(t) for t in it.get("tags", []))
@@ -54,11 +51,11 @@ REPORT_PAGE = """<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <main class="wrap"><div class="report-h"><div class="tag">%(kind)s</div><h1>%(h1)s</h1>
 <p class="note">共 %(n)d 条 · 影像设备 %(img)d · 医疗器械 %(dev)d · 背景 %(bg)d</p></div>
 <div class="feed">%(cards)s</div></main>
-<footer><div class="wrap"><p>本页由程序从公开渠道自动整理，非官方发布。分级、标签和 AI 解读可能有误，一切以官方原文为准。</p></div></footer>
+<footer><div class="wrap"><p>本页由程序从公开渠道自动整理，非官方发布。分级和标签可能有误，一切以官方原文为准。</p></div></footer>
 </body></html>"""
 
 
-def build(items, reports, out_dir, today, trends=None, all_items=None, ai_cfg=None):
+def build(items, reports, out_dir, today, trends=None, all_items=None):
     os.makedirs(out_dir, exist_ok=True)
     css = _read("style.css")
 
@@ -82,20 +79,17 @@ def build(items, reports, out_dir, today, trends=None, all_items=None, ai_cfg=No
     for kind, label, _p, sel, _s in sorted(reports, key=lambda r: r[1], reverse=True):
         arch[kind].append({"label": label, "count": len(sel)})
     all_items = all_items if all_items is not None else items
-    ai_cfg = ai_cfg or {}
     data = {
         "today": today.isoformat(),
         "items": [_slim(i) for i in items],
         "allItems": [{"title": i["title"], "date": i["date"], "level": i["level"]} for i in all_items],
         "trends": trends or {},
         "reports": arch,
-        "ai": {"base_url": ai_cfg.get("base_url", "https://api.deepseek.com"), "model": ai_cfg.get("model", "deepseek-chat")},
     }
     page = (_read("index.html")
             .replace("{{CSS}}", css)
             .replace("{{UPDATED}}", today.isoformat())
             .replace("{{TOTAL}}", str(len(all_items)))
-            .replace("{{AI_PROVIDER}}", _e(ai_cfg.get("provider", "DeepSeek")))
             .replace("{{DATA}}", _json_for_script(data))
             .replace("{{JS}}", _read("app.js")))
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8") as f:

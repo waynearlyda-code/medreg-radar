@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MedReg Radar · 医疗器械法规雷达</title>
-<meta name="description" content="医疗器械（以医学影像设备为主）法规与政策动态，自动整理、分级、可视化，并支持 AI 问答。">
+<meta name="description" content="医疗器械（以医学影像设备为主）法规与政策动态：自动整理、分级、可视化，一键导出给你的 AI。">
 <style>{{CSS}}</style>
 </head>
 <body>
@@ -16,9 +16,9 @@
   <nav><a href="#feed-sec">动态</a><a href="#data-sec">数据</a><a href="#arch-sec">档案</a></nav>
   <span class="sp"></span>
   <button class="iconbtn" id="theme" title="切换亮色 / 暗色" aria-label="切换亮色或暗色">◐</button>
-  <button class="btn primary" data-open-ai>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12v8H6l-3 3v-3H2z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>问 AI
-  </button>
+  <a class="btn primary" href="#feed-sec" data-export-jump>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>导出给 AI
+  </a>
 </div></header>
 
 <main class="wrap">
@@ -26,7 +26,7 @@
     <div>
       <div class="idline tag"><i></i>MEDICAL DEVICE REGULATORY MONITOR · 医疗器械法规雷达</div>
       <h1>法规更新得太快？<br>让雷达替你<em>盯着</em>。</h1>
-      <p class="lead">把分散在各部门网站上的医疗器械法规和政策收拢到一处，按<b>影像设备 / 医疗器械 / 背景</b>分级，配上 AI 解读和问答。为设备工程师、采购和管理人员准备。</p>
+      <p class="lead">把分散在各部门网站上的医疗器械法规和政策收拢到一处，按<b>影像设备 / 医疗器械 / 背景</b>分级，一键导出给你常用的 AI（豆包、DeepSeek、Kimi 或你自己的智能体）继续分析。为设备工程师、采购和管理人员准备。</p>
       <div class="stats">
         <div class="stat"><div class="k"><i style="background:var(--s-img)"></i>影像设备</div><div class="v" id="st0">0</div><div class="d">近 30 天新文件</div></div>
         <div class="stat"><div class="k"><i style="background:var(--s-dev)"></i>医疗器械</div><div class="v" id="st1">0</div><div class="d">近 30 天新文件</div></div>
@@ -77,6 +77,17 @@
       <input class="search" id="f-q" type="search" placeholder="搜索标题、摘要、文号" aria-label="搜索">
       <span class="count" id="count"></span>
     </div>
+    <div class="export" id="export">
+      <div class="ex-row"><span class="tag">EXPORT · 导出给你的 AI</span><span class="ex-scope" id="ex-scope"></span></div>
+      <div class="ex-row">
+        <label class="ex-task">想让 AI 做什么<select id="ex-task" aria-label="导出用途"></select></label>
+        <button class="btn primary" id="ex-copy" type="button">复制给 AI</button>
+        <button class="btn" id="ex-share" type="button">分享到 App</button>
+        <button class="btn" id="ex-md" type="button">下载 .md</button>
+        <button class="btn" id="ex-csv" type="button">下载 .csv（Excel）</button>
+      </div>
+      <p class="ex-hint">导出的是上面筛选出来的内容。复制后打开豆包、DeepSeek、Kimi 等聊天 App 粘贴发送；也可以下载文件上传给它，或交给你自己的智能体。<span id="ex-msg" class="ex-msg" role="status"></span></p>
+    </div>
     <div class="feed" id="feed"></div>
     <div class="more"><button class="btn" id="more" hidden>显示更多</button></div>
   </section>
@@ -118,42 +129,12 @@
 </main>
 
 <footer><div class="wrap">
-  <p>本站由程序从公开渠道自动整理，<b>非官方发布</b>。分级、标签和 AI 解读由程序生成，可能有误，一切以官方原文为准。本站不提供法律或合规意见。</p>
+  <p>本站由程序从公开渠道自动整理，<b>非官方发布</b>。分级和标签由程序生成，可能有误，一切以官方原文为准。本站不提供法律或合规意见。</p>
   <p>国家药监局的内容由人工在浏览器中保存后导入；本项目不绕过任何网站的访问限制。</p>
   <p class="mono">MEDREG RADAR · OPEN SOURCE · MIT</p>
 </div></footer>
 
-<aside class="drawer" id="drawer" aria-hidden="true" aria-label="AI 问答">
-  <div class="dh"><b>问 AI</b><span class="tag">{{AI_PROVIDER}}</span><span class="sp"></span><button class="iconbtn" id="close-ai" aria-label="关闭">✕</button></div>
-  <div class="body">
-    <p class="note" style="margin-top:0">AI 只根据本站收录的文件回答，并标出出处编号。资料里没有的，它会说没有。</p>
-    <div class="presets" id="presets">
-      <button>整理本月和影像设备相关的文件</button>
-      <button>最近有哪些注册审评方面的新规定？</button>
-      <button>最近的文件对医院设备科工程师有什么影响？</button>
-      <button>医用设备集中采购最近有什么新要求？</button>
-    </div>
-    <div id="chat"></div>
-  </div>
-  <form id="askform"><textarea id="ask" placeholder="输入问题，回车发送（Shift+回车换行）" aria-label="问题"></textarea><button class="btn primary" id="send" type="submit">发送</button></form>
-  <div class="keybar"><span id="keystate"></span><span class="sp" style="flex:1"></span><button id="key-change" type="button">换一个</button><button id="key-clear" type="button">清除 key</button></div>
-</aside>
 
-<div class="modal" id="keymodal" role="dialog" aria-modal="true" aria-labelledby="km-t">
-  <div class="box">
-    <h3 id="km-t">先填一个你自己的 AI key</h3>
-    <p class="note" style="margin:0">问答功能用的是 DeepSeek 的大模型，按用量从你自己的账户扣费，单次问答的用量很小。三步搞定：</p>
-    <ol>
-      <li>打开 <a href="https://platform.deepseek.com" target="_blank" rel="noopener">platform.deepseek.com</a>，注册并登录。</li>
-      <li>左侧点“充值”，充一点点就够用很久（比如 10 元）。</li>
-      <li>左侧点“API keys” → “创建 API key”，起个名字，<b>复制</b>那串以 <code>sk-</code> 开头的字符，粘到下面。</li>
-    </ol>
-    <input id="keyinput" type="password" placeholder="sk-……" autocomplete="off" aria-label="API key">
-    <p class="note" id="key-err" style="color:var(--s-dev)"></p>
-    <div class="warn">你的 key <b>只保存在这个浏览器里</b>，直接发给 DeepSeek，不经过本站、不会上传到任何地方。在公用电脑上用完请点“清除 key”。建议在 DeepSeek 后台给 key 设一个消费上限。</div>
-    <div class="row"><button class="btn" id="key-cancel" type="button">以后再说</button><button class="btn primary" id="key-save" type="button">保存</button></div>
-  </div>
-</div>
 
 <script>window.MR = {{DATA}};</script>
 <script>{{JS}}</script>

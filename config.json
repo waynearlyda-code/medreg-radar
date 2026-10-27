@@ -114,14 +114,5 @@
       "发展",
       "十五五"
     ]
-  },
-  "ai": {
-    "provider": "DeepSeek",
-    "base_url": "https://api.deepseek.com",
-    "model": "deepseek-chat",
-    "batch_size": 10,
-    "max_items_per_run": 80,
-    "key_file": ".secrets/deepseek_key.txt",
-    "key_env": "DEEPSEEK_API_KEY"
   }
 }

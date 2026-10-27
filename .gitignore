@@ -6,5 +6,4 @@ inbox/*.htm
 inbox/*_files/
 inbox/done/
 data/*.tmp
-.secrets/*
-!.secrets/README.md
+.secrets/   # 本地私有文件，永不上传

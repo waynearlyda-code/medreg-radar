@@ -236,11 +236,23 @@ footer p{margin:4px 0}
   .chart header .tools{margin-left:0}
 }
 .drawer:not(.open){visibility:hidden;transition:transform .25s ease,visibility 0s .25s}
+
+/* 导出面板 */
+.export{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:12px 14px;margin:0 0 14px}
+.ex-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ex-row+.ex-row{margin-top:10px}
+.ex-scope{margin-left:auto;font:12px var(--mono);color:var(--ink-2);letter-spacing:.04em}
+.ex-task{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);flex:1 1 260px}
+.ex-task select{flex:1;min-width:0;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:6px;padding:6px 8px;font:13px var(--sans)}
+.ex-hint{margin:10px 0 0;font-size:12.5px;color:var(--ink-3)}
+.ex-msg{display:block;color:var(--accent-ink);font-weight:600;margin-top:4px}
+.ex-msg:empty{display:none}
+@media (max-width:520px){.ex-scope{margin-left:0;width:100%}.export .btn{flex:1 1 auto;justify-content:center}}
 </style></head>
 <body><header class="top"><div class="wrap"><a class="brand" href="../index.html"><b>MedReg <span>Radar</span></b></a>
 <span class="sp"></span><a class="btn" href="../index.html">返回首页</a></div></header>
 <main class="wrap"><div class="report-h"><div class="tag">WEEKLY REPORT</div><h1>周报 2026-W40（09.28 – 10.04）</h1>
 <p class="note">共 1 条 · 影像设备 0 · 医疗器械 0 · 背景 1</p></div>
-<div class="feed"><article class="card" data-lv="背景"><div class="bar"></div><div class="in"><div class="meta"><span class="lv">背景</span><span>2026-09-28</span><span>中国政府网·部门文件</span></div><h3><a href="https://www.gov.cn/zhengce/zhengceku/202609/content_7082302.htm" target="_blank" rel="noopener">中国人民银行等八部门联合印发《关于金融支持服务业扩能提质的指导意见》</a></h3><p class="ai"><span class="tag">AI 解读</span>八部门金融支持服务业提质，强化康复护理、医养结合、长期照护金融支持，促进国产医疗设备等。主要影响康复护理机构、药店及国产设备企业。与影像设备无直接关系。</p></div></article></div></main>
-<footer><div class="wrap"><p>本页由程序从公开渠道自动整理，非官方发布。分级、标签和 AI 解读可能有误，一切以官方原文为准。</p></div></footer>
+<div class="feed"><article class="card" data-lv="背景"><div class="bar"></div><div class="in"><div class="meta"><span class="lv">背景</span><span>2026-09-28</span><span>中国政府网·部门文件</span></div><h3><a href="https://www.gov.cn/zhengce/zhengceku/202609/content_7082302.htm" target="_blank" rel="noopener">中国人民银行等八部门联合印发《关于金融支持服务业扩能提质的指导意见》</a></h3></div></article></div></main>
+<footer><div class="wrap"><p>本页由程序从公开渠道自动整理，非官方发布。分级和标签可能有误，一切以官方原文为准。</p></div></footer>
 </body></html>
