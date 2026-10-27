@@ -102,3 +102,6 @@ def build(items, reports, out_dir, today, trends=None, all_items=None, ai_cfg=No
         f.write(page)
     with open(os.path.join(out_dir, "latest.json"), "w", encoding="utf-8") as f:
         json.dump({"updated": today.isoformat(), "total": len(all_items)}, f, ensure_ascii=False, indent=1)
+    # 公开数据接口：网页嵌入的同一份数据，供 App 或其他程序读取
+    with open(os.path.join(out_dir, "data.json"), "w", encoding="utf-8") as f:
+        json.dump(dict(data, version=1), f, ensure_ascii=False)
