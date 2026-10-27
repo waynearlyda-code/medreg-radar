@@ -13,6 +13,8 @@ from html.parser import HTMLParser
 from .util import clean, parse_date
 
 DATE_RE = re.compile(r"20\d{2}\s*[.\-/年]\s*\d{1,2}\s*[.\-/月]\s*\d{1,2}")
+# 只去掉标题里“附带的日期”，比如末尾的（2026-10-20）；不碰“（2026年第101号）”这种文号
+PAREN_DATE_RE = re.compile(r"[（(]?\s*20\d{2}\s*[.\-/年]\s*\d{1,2}\s*[.\-/月]\s*\d{1,2}\s*日?\s*[)）]?")
 
 
 class _Links(HTMLParser):
@@ -92,7 +94,7 @@ def read_inbox(folder, log=print):
             url = urllib.parse.urljoin(base, href) if base else href
             if not url.startswith("http"):
                 continue
-            out.append({"url": url, "title": DATE_RE.sub("", text).strip(" ()（）"),
+            out.append({"url": url, "title": PAREN_DATE_RE.sub("", text).strip(),
                         "date": d.isoformat(), "summary": "", "doc_no": "", "source": source})
             n += 1
         log("  [手动导入] %s：认出 %d 条（来源：%s）" % (name, n, source))
